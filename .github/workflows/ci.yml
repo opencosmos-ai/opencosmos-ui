@@ -34,6 +34,9 @@ jobs:
       - name: Build All Packages
         run: pnpm build
 
+      - name: Check ADR Index
+        run: pnpm adr:index --check
+
       - name: Lint
         run: pnpm --filter @thesage/ui lint
 
