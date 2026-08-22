@@ -6,6 +6,18 @@ import { TextField, Breadcrumbs, type BreadcrumbItemLegacy } from '@opencosmos/u
 import { useForm, useTheme, useToast } from '@opencosmos/ui';
 import { HooksOverview } from './HooksOverview';
 
+function deriveActiveHook(activeItemId: string | undefined): string {
+  if (!activeItemId || activeItemId === 'hooks') return 'overview';
+  // Map kebab-case ids to camelCase names
+  // e.g., 'use-form' -> 'useForm', 'use-motion-preference' -> 'useMotionPreference'
+  return activeItemId
+    .split('-')
+    .map((word, index) =>
+      index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join('');
+}
+
 interface HooksSectionProps {
   activeItemId?: string;
   breadcrumbs?: BreadcrumbItemLegacy[];
@@ -13,29 +25,15 @@ interface HooksSectionProps {
 }
 
 export function HooksSection({ activeItemId, breadcrumbs, onItemChange }: HooksSectionProps) {
-  const [activeHook, setActiveHook] = useState<string>('overview');
+  const [activeHook, setActiveHook] = useState<string>(() => deriveActiveHook(activeItemId));
 
-  // Update active hook when activeItemId changes
-  useEffect(() => {
-    if (activeItemId) {
-      if (activeItemId === 'hooks') {
-        setActiveHook('overview');
-      } else {
-        // Map kebab-case ids to camelCase names
-        // e.g., 'use-form' -> 'useForm', 'use-motion-preference' -> 'useMotionPreference'
-        const hookName = activeItemId
-          .split('-')
-          .map((word, index) =>
-            index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
-          )
-          .join('');
-
-        setActiveHook(hookName);
-      }
-    } else {
-      setActiveHook('overview');
-    }
-  }, [activeItemId]);
+  // Adjust derived state during render when the prop changes, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+  if (activeItemId !== prevActiveItemId) {
+    setPrevActiveItemId(activeItemId);
+    setActiveHook(deriveActiveHook(activeItemId));
+  }
 
   return (
     <div className="space-y-8 w-full min-w-0">

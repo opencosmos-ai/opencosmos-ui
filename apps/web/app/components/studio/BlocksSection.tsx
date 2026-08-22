@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Card, Button } from '@opencosmos/ui';
 import { Header, SecondaryNav, TertiaryNav, Footer, Modal, ToastProvider, useToast, CollapsibleCodeBlock, Code, CustomizerPanel, Breadcrumbs, PageLayout, type BreadcrumbItemLegacy } from '@opencosmos/ui';
 import { SlidersHorizontal, Sun, Moon, SunMoon, Building2, Leaf, Zap, X } from 'lucide-react';
@@ -12,6 +13,21 @@ import { EnhancedComponentPlayground } from './ComponentsSection/EnhancedCompone
 import { componentRegistry } from '../lib/component-registry';
 
 type BlockType = 'overview' | 'PageLayout' | 'PrimaryNav' | 'SecondaryNav' | 'TertiaryNav' | 'FirstStack' | 'SecondStack' | 'Footer' | 'Toast' | 'Modal' | 'CollapsibleCodeBlock' | 'HeroBlock' | 'OpenGraphCard';
+
+function derivePattern(activeItemId: string | undefined, current: BlockType): BlockType {
+  if (!activeItemId) return 'overview';
+  // Map kebab-case ids to PascalCase names
+  // e.g., 'primary-nav' -> 'PrimaryNav', 'first-stack' -> 'FirstStack'
+  const patternName = activeItemId
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('') as BlockType;
+
+  if (['PageLayout', 'PrimaryNav', 'SecondaryNav', 'TertiaryNav', 'FirstStack', 'SecondStack', 'Footer', 'Toast', 'Modal', 'CollapsibleCodeBlock', 'HeroBlock', 'OpenGraphCard'].includes(patternName)) {
+    return patternName;
+  }
+  return current;
+}
 
 interface BlocksSectionProps {
   activeItemId?: string;
@@ -103,25 +119,17 @@ function ModalDemo() {
 
 
 export function BlocksSection({ activeItemId, breadcrumbs, onItemChange }: BlocksSectionProps) {
-  const [selectedPattern, setSelectedPattern] = useState<BlockType>('overview');
+  const [selectedPattern, setSelectedPattern] = useState<BlockType>(
+    () => derivePattern(activeItemId, 'overview')
+  );
 
-  // Update selected pattern when activeItemId changes
-  useEffect(() => {
-    if (activeItemId) {
-      // Map kebab-case ids to PascalCase names
-      // e.g., 'primary-nav' -> 'PrimaryNav', 'first-stack' -> 'FirstStack'
-      const patternName = activeItemId
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join('') as BlockType;
-
-      if (['PageLayout', 'PrimaryNav', 'SecondaryNav', 'TertiaryNav', 'FirstStack', 'SecondStack', 'Footer', 'Toast', 'Modal', 'CollapsibleCodeBlock', 'HeroBlock', 'OpenGraphCard'].includes(patternName)) {
-        setSelectedPattern(patternName);
-      }
-    } else {
-      setSelectedPattern('overview');
-    }
-  }, [activeItemId]);
+  // Adjust derived state during render when the prop changes, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+  if (activeItemId !== prevActiveItemId) {
+    setPrevActiveItemId(activeItemId);
+    setSelectedPattern((current) => derivePattern(activeItemId, current));
+  }
 
   // Handle pattern selection and notify parent
   const handlePatternChange = (id: BlockType) => {
@@ -273,9 +281,9 @@ export function BlocksSection({ activeItemId, breadcrumbs, onItemChange }: Block
               <Card className="p-0 overflow-hidden bg-[var(--color-background)]">
                 <Header
                   logo={
-                    <a href="/" className="font-semibold text-lg" style={{ fontFamily: 'var(--font-header-logo)' }}>
+                    <Link href="/" className="font-semibold text-lg" style={{ fontFamily: 'var(--font-header-logo)' }}>
                       Brand
-                    </a>
+                    </Link>
                   }
                   navLinks={[
                     { label: 'Features', href: '/features' },
@@ -292,7 +300,7 @@ export function BlocksSection({ activeItemId, breadcrumbs, onItemChange }: Block
                   ]}
                   actions={
                     <>
-                      <a href="/signin">Sign In</a>
+                      <Link href="/signin">Sign In</Link>
                       <Button variant="default" size="sm">
                         Get Started
                       </Button>

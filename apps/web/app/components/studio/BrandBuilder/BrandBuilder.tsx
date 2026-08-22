@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useClientSeededState } from '@/hooks/useClientSeededState';
 import { Card, Button, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Slider } from '@opencosmos/ui';
 import { Download, Copy, Check, Save, Trash2, RefreshCw } from 'lucide-react';
 import { getAllFontNames } from '../../../../lib/fonts-dynamic';
@@ -34,9 +35,21 @@ const FONT_WEIGHTS = [
   { value: 900, label: 'Black' },
 ];
 
+function readStoredBrands(): SavedBrand[] {
+  const saved = localStorage.getItem('sage-brands');
+  if (!saved) return [];
+  try {
+    return JSON.parse(saved);
+  } catch (e) {
+    console.error('Failed to load saved brands:', e);
+    return [];
+  }
+}
+
 export function BrandBuilder() {
   const [copied, setCopied] = useState<string | null>(null);
-  const [savedBrands, setSavedBrands] = useState<SavedBrand[]>([]);
+  // Saved brands, restored from localStorage after hydration.
+  const [savedBrands, setSavedBrands] = useClientSeededState<SavedBrand[]>([], readStoredBrands);
   const [isSyncing, setIsSyncing] = useState(false);
   const [brand, setBrand] = useState<BrandConfig>({
     name: 'My Brand',
@@ -61,18 +74,6 @@ export function BrandBuilder() {
     primary: palette.primary,
     secondary: palette.secondary,
   }));
-
-  // Load saved brands from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('sage-brands');
-    if (saved) {
-      try {
-        setSavedBrands(JSON.parse(saved));
-      } catch (e) {
-        console.error('Failed to load saved brands:', e);
-      }
-    }
-  }, []);
 
   const updateBrand = (updates: Partial<BrandConfig>) => {
     setBrand(prev => ({ ...prev, ...updates }));

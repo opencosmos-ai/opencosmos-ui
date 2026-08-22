@@ -14,11 +14,11 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^3.10.0",
-    "@tanstack/react-table": "^8.21.3",
     "@opencosmos/constellation": "workspace:*",
     "@opencosmos/mcp": "workspace:*",
     "@opencosmos/tokens": "workspace:*",
     "@opencosmos/ui": "workspace:*",
+    "@tanstack/react-table": "^8.21.3",
     "@vercel/analytics": "^1.6.1",
     "@vercel/edge-config": "^1.4.3",
     "class-variance-authority": "^0.7.1",
@@ -37,10 +37,13 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
+    "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4.0.0",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.3.2",
     "postcss": "^8.4.49",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.9.3"

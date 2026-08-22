@@ -35,13 +35,13 @@ jobs:
         run: pnpm build
 
       - name: Lint
-        run: pnpm --filter @thesage/ui lint
+        run: pnpm lint
 
       - name: Typecheck
-        run: pnpm --filter @thesage/ui typecheck
+        run: pnpm typecheck
 
       - name: Run Tests
-        run: pnpm --filter @thesage/ui test
+        run: pnpm test
 
       - name: Check Bundle Sizes
-        run: pnpm --filter @thesage/ui size:check
+        run: pnpm size:check

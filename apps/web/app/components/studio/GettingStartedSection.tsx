@@ -22,15 +22,15 @@ export function GettingStartedSection({
 }: GettingStartedSectionProps) {
   const [selectedItem, setSelectedItem] = useState(activeItemId || 'getting-started-overview');
 
+  // Adjust derived state during render when the prop changes, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+  if (activeItemId !== prevActiveItemId) {
+    setPrevActiveItemId(activeItemId);
+    setSelectedItem(activeItemId || 'getting-started-overview');
+  }
+
   // Sync selectedItem with activeItemId when it changes (from sidebar navigation)
-  useEffect(() => {
-    if (activeItemId) {
-      setSelectedItem(activeItemId);
-    } else {
-      // If no activeItemId, show the overview
-      setSelectedItem('getting-started-overview');
-    }
-  }, [activeItemId]);
 
   const handleItemChange = (id: string) => {
     setSelectedItem(id);
