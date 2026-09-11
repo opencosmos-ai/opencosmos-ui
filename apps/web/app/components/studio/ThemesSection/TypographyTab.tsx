@@ -42,6 +42,7 @@ import { useTheme } from '@opencosmos/ui';
 import { useCustomizer } from '@opencosmos/ui';
 import { SecondaryNav, type SecondaryNavItem } from '@opencosmos/ui';
 import { fontThemes, type FontThemeCategory } from '@opencosmos/tokens';
+import { useMounted } from '@/hooks/useMounted';
 import { getAllFontNames } from '../../../../lib/fonts-dynamic';
 import {
   Check, MoreVertical, Edit, Trash2, Plus, Info,
@@ -80,12 +81,7 @@ export function TypographyTab({ onNavigateToPlayground }: TypographyTabProps = {
   const [localThemeOrder, setLocalThemeOrder] = useState<any[]>([]);
 
   const { theme, mode } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Prevent hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   // Use proper Zustand selectors for reactive state
   const applyFontTheme = useCustomizer(state => state.applyFontTheme);
@@ -107,10 +103,16 @@ export function TypographyTab({ onNavigateToPlayground }: TypographyTabProps = {
     ...savedFontThemes,
   ];
 
-  // Initialize local theme order on mount or when source data changes
-  useEffect(() => {
+  // Re-sync the local drag order when the number of saved entries changes.
+  // Adjusted during render rather than in an effect
+  // (https://react.dev/learn/you-might-not-need-an-effect). Before the first
+  // change the local order is empty and `display*` falls back to `allFontThemes`,
+  // which is what the mount run of the old effect produced.
+  const [prevSavedCount, setPrevSavedCount] = useState(savedFontThemes.length);
+  if (savedFontThemes.length !== prevSavedCount) {
+    setPrevSavedCount(savedFontThemes.length);
     setLocalThemeOrder(allFontThemes);
-  }, [savedFontThemes.length]);
+  }
 
   if (!mounted) {
     return null;

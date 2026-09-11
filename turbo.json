@@ -20,6 +20,12 @@
     "lint": {},
     "typecheck": {
       "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["^build"]
+    },
+    "size:check": {
+      "dependsOn": ["build"]
     }
   }
 }

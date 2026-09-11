@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useEffect, useMemo, useState } from 'react'
+import { useClientSeededState } from '@/hooks/useClientSeededState'
 import type { ConstellationData, Tier } from '@opencosmos/constellation'
 import { DEFAULT_LOD_VISIBILITY, DEFAULT_TIER_COLORS } from '@opencosmos/constellation'
 
@@ -20,6 +21,12 @@ const TIER_ORDER: Tier[] = ['tradition', 'synthesis', 'work', 'section', 'quote'
  *   - Ambient drift (toggle in panel; auto-off under prefers-reduced-motion)
  *   - Focus targeting (work selector → camera tweens to that work + neighbors)
  */
+function readHighlightParam(): string[] {
+  const raw = new URLSearchParams(window.location.search).get('highlight')
+  if (!raw) return []
+  return raw.split(',').map((s) => s.trim()).filter(Boolean)
+}
+
 export default function ConstellationDemoPage() {
   const [data, setData] = useState<ConstellationData | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -29,11 +36,7 @@ export default function ConstellationDemoPage() {
   const [focus, setFocus] = useState<string | null>(null)
   // Seedable from `?highlight=id1,id2` so a particular lit state is shareable
   // (and testable) without hunting for the dots by hand.
-  const [highlighted, setHighlighted] = useState<string[]>([])
-  useEffect(() => {
-    const raw = new URLSearchParams(window.location.search).get('highlight')
-    if (raw) setHighlighted(raw.split(',').map((s) => s.trim()).filter(Boolean))
-  }, [])
+  const [highlighted, setHighlighted] = useClientSeededState<string[]>([], readHighlightParam)
 
   useEffect(() => {
     fetch('/constellation-sample.json')

@@ -2,17 +2,14 @@
 
 import React from 'react';
 import { ThemeSwitcher } from '@opencosmos/ui';
+import { useMounted } from '@/hooks/useMounted';
 
 /**
  * Mode switcher for the design system documentation
  * Uses the ThemeSwitcher component with expandable options
  */
 export function ModeSwitcher() {
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   if (!mounted) return null;
 

@@ -1,13 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Button, FaultyTerminal, Typewriter, Footer, Header } from '@opencosmos/ui';
 import Link from 'next/link';
 import { Github } from 'lucide-react';
+import { useMounted } from '@/hooks/useMounted';
 
 export default function NotFound() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-black dark">

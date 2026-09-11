@@ -180,8 +180,20 @@ export function useFontThemeLoader(
   }, [targetSelector]);
 
   /**
-   * Load fonts when font theme changes
+   * Load fonts when font theme changes.
+   *
+   * The status writes here are genuinely effect-driven and cannot move into
+   * render. Each one is paired with a DOM side effect or a consumer callback —
+   * `applyFontTheme()` writes CSS custom properties, `markFontsAsLoaded()`
+   * mutates the module-level cache, and `onLoaded`/`onError` are the consumer's
+   * hooks into the transition. `areFontsLoaded()` also inspects live document
+   * state, which is unavailable during SSR and not safe to read while rendering.
+   *
+   * This is a load state machine, not derived state, so the alternatives the
+   * rule points at (compute during render, `useMounted`, `useClientSeededState`)
+   * do not apply.
    */
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (!fontTheme) {
       setStatus('idle');
@@ -230,6 +242,7 @@ export function useFontThemeLoader(
 
     loadFonts();
   }, [fontTheme, autoApply, applyFontTheme, onLoaded, onError]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   return {
     status,

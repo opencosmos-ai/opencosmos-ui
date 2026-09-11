@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useMounted } from '@/hooks/useMounted';
+import { useClientSeededState } from '@/hooks/useClientSeededState';
 import { navigationTree, type NavigationItem } from '../lib/navigation-tree';
 import {
   Sidebar,
@@ -21,6 +24,21 @@ interface NavigationSidebarProps {
   onToggle?: () => void;
 }
 
+/** Expanded sections, restored from localStorage. Client-only. */
+function readStoredExpandedItems(): Set<string> {
+  const stored = localStorage.getItem('sage-sidebar-expanded');
+  if (stored) {
+    try {
+      return new Set<string>(JSON.parse(stored));
+    } catch {
+      // Ignore malformed storage and fall through to the default.
+    }
+  }
+  // Default: only expand the first section (Getting Started)
+  // This behavior can be easily changed by modifying the array below
+  return new Set<string>(['getting-started']);
+}
+
 export function NavigationSidebar({
   activeSection,
   activeItemId,
@@ -29,30 +47,14 @@ export function NavigationSidebar({
   isOpen = true,
   onToggle,
 }: NavigationSidebarProps) {
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
-  const [isMounted, setIsMounted] = useState(false);
+  const [expandedItems, setExpandedItems] = useClientSeededState<Set<string>>(
+    new Set(),
+    readStoredExpandedItems
+  );
+  const isMounted = useMounted();
 
   // Feature flag for icons - requested by user to be hidden by default but easily restorable
   const SHOW_ICONS = false;
-
-  // Load expanded state from localStorage on mount
-  useEffect(() => {
-    setIsMounted(true);
-    const stored = localStorage.getItem('sage-sidebar-expanded');
-    if (stored) {
-      try {
-        const items = JSON.parse(stored);
-        setExpandedItems(new Set(items));
-      } catch (e) {
-        // Ignore errors
-      }
-    } else {
-      // Default: only expand the first section (Getting Started)
-      // This behavior can be easily changed by modifying the array below
-      const defaultExpanded = new Set<string>(['getting-started']);
-      setExpandedItems(defaultExpanded);
-    }
-  }, []);
 
   // Save expanded state to localStorage
   useEffect(() => {
@@ -159,11 +161,11 @@ export function NavigationSidebar({
       <Sidebar isOpen={isOpen}>
         <SidebarHeader>
           <div className="w-full flex items-center justify-between">
-            <a href="/" className="hover:opacity-80 transition-opacity">
+            <Link href="/" className="hover:opacity-80 transition-opacity">
               <h2 className="text-lg font-bold text-foreground">
                 {BRAND.productName}
               </h2>
-            </a>
+            </Link>
             <button
               onClick={onToggle}
               className="lg:hidden p-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors"

@@ -1,5 +1,4 @@
 import { createRoot as domCreateRoot, hydrateRoot as domHydrateRoot } from 'react-dom/client';
-import { unmountComponentAtNode as domUnmountComponentAtNode } from 'react-dom';
 import { createSheet } from '../StyleSheet/dom';
 
 export function hydrate(element, root) {

@@ -35,6 +35,7 @@ import { useTheme } from '@opencosmos/ui';
 import { useCustomizer } from '@opencosmos/ui';
 import { SecondaryNav, type SecondaryNavItem } from '@opencosmos/ui';
 import { colorPalettes, type PaletteCategory } from '@opencosmos/tokens';
+import { useMounted } from '@/hooks/useMounted';
 import {
   Check, MoreVertical, Edit, Trash2, Plus,
   Briefcase, Palette, Leaf, Zap, Minimize,
@@ -68,12 +69,7 @@ export function PalettesTab() {
   const [localPaletteOrder, setLocalPaletteOrder] = useState<any[]>([]);
 
   const { theme, mode } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Prevent hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
 
 
@@ -97,10 +93,16 @@ export function PalettesTab() {
     ...savedPalettes,
   ];
 
-  // Initialize local palette order on mount or when source data changes
-  useEffect(() => {
+  // Re-sync the local drag order when the number of saved entries changes.
+  // Adjusted during render rather than in an effect
+  // (https://react.dev/learn/you-might-not-need-an-effect). Before the first
+  // change the local order is empty and `display*` falls back to `allPalettes`,
+  // which is what the mount run of the old effect produced.
+  const [prevSavedCount, setPrevSavedCount] = useState(savedPalettes.length);
+  if (savedPalettes.length !== prevSavedCount) {
+    setPrevSavedCount(savedPalettes.length);
     setLocalPaletteOrder(allPalettes);
-  }, [savedPalettes.length]); // Only re-sync when saved palettes count changes
+  }
 
   if (!mounted) {
     return null;
