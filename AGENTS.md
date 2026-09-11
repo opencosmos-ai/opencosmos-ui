@@ -37,7 +37,7 @@ opencosmos-ui/
 
 ## If This Is Your First Time
 
-**Do these 4 things before writing any code:**
+**Do these 5 things before writing any code:**
 
 1. **Read [DESIGN-PHILOSOPHY.md](DESIGN-PHILOSOPHY.md)** — The four principles (Emotionally Resonant, User Control & Freedom, Transparent by Design, Generous by Design) govern every decision.
 
@@ -58,6 +58,27 @@ opencosmos-ui/
 4. **Read the workflow for your task type:**
    - Adding a component → See the full workflow in [.claude/CLAUDE.md](.claude/CLAUDE.md#adding-a-component-complete-workflow)
    - Modifying existing behavior → Read the component source first, then check for tests
+
+5. **Skim [docs/decisions/](docs/decisions/README.md)** — the decision records. See below.
+
+---
+
+## Decision Records — Check Before You "Fix" Something
+
+[**docs/decisions/**](docs/decisions/README.md) holds numbered, dated, append-only records of why this repository's load-bearing choices were made. Start with [0001](docs/decisions/0001-adopt-architecture-decision-records.md), which explains the format and what earns a record.
+
+**Read them before changing something that looks arbitrary.** Much of what constrains this repository looks like an oversight until you know the reason, and most of those constraints are load-bearing for applications in *another* repository that you cannot see from here. A few whose reason is invisible from the code itself:
+
+| Looks like | Is actually |
+|---|---|
+| `styles.src.css` takes a strange path to `@import "tailwindcss"` | Deliberate — the plain import ships preflight and the default theme into every consumer ([0003](docs/decisions/0003-precompiled-styles-css-over-a-consumer-safelist.md)) |
+| A consumer's `className` override "doesn't work" | The package ships unlayered CSS; the fix is `class!` at the call site, **not** re-layering the app's imports ([0004](docs/decisions/0004-package-styles-ship-unlayered.md)) |
+| `responsive-classes.ts` is absurdly verbose | Interpolated Tailwind classes are silently never generated ([0005](docs/decisions/0005-tailwind-class-names-are-never-interpolated.md)) |
+| A `useContext` hook returning a default instead of throwing | `transpilePackages` can duplicate the context instance, so the throw fires with the Provider present ([0010](docs/decisions/0010-context-hooks-return-a-safe-default.md)) |
+
+**Writing a record does not require asking first.** If you make a call a future reader would find surprising — or you discover a constraint whose reason exists nowhere in the repository — write the record. Copy the shape of an existing one, take the next number, run `pnpm adr:index`, and commit it with your change. A mediocre record costs little; a decision nobody wrote down is what this directory exists to fix.
+
+Never edit a record to change its meaning. Supersede it with a new one and link both ways.
 
 ---
 
@@ -419,6 +440,8 @@ Every significant change must be logged in [CHANGELOG.md](CHANGELOG.md) with an 
 **Log:** New components, features, breaking changes, dependency updates, bug fixes.
 **Skip:** Typo fixes, formatting, internal refactors with no behavior change.
 
+A changelog entry explains *this change, now*. A constraint that will outlive the change — something a consumer or a future agent must not undo — belongs in [docs/decisions/](docs/decisions/README.md) as well.
+
 ---
 
 ## Common Gotchas
@@ -449,6 +472,7 @@ For WebGL/shader components: don't branch in GLSL. Always run the animation path
 |------|---------|
 | `DESIGN-PHILOSOPHY.md` | North Star — four principles |
 | `CHANGELOG.md` | Work history |
+| `docs/decisions/` | Architecture Decision Records — why load-bearing choices were made |
 | `.claude/CLAUDE.md` | Primary AI context + component registration workflow |
 | `packages/ui/package.json` | Package config, exports map, size limits, bin |
 | `packages/ui/tsup.config.ts` | Build config (library + CLI) |
