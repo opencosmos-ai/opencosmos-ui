@@ -1751,7 +1751,7 @@ import { labelVariants } from '@opencosmos/ui'
 # RESOURCES
 
 - Docs: https://opencosmos.ai/studio/docs/overview
-- GitHub: https://github.com/shalomormsby/opencosmos-ui
+- GitHub: https://github.com/opencosmos-ai/opencosmos-ui
 - NPM: https://www.npmjs.com/package/@opencosmos/ui
 - MCP: https://www.npmjs.com/package/@opencosmos/mcp
 - API JSON: https://opencosmos.ai/studio/docs/api.json

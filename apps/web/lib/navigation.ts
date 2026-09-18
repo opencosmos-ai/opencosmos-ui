@@ -12,7 +12,7 @@ export const ecosystemNavigation: HeaderNavLink[] = [
     label: 'Resources',
     children: [
       { label: 'NPM Package', href: 'https://www.npmjs.com/package/@opencosmos/ui' },
-      { label: 'GitHub', href: 'https://github.com/shalomormsby/opencosmos-ui' },
+      { label: 'GitHub', href: 'https://github.com/opencosmos-ai/opencosmos-ui' },
     ],
   },
 ];

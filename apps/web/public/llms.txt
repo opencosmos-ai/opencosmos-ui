@@ -52,6 +52,6 @@ Also available via:
 - API: `GET https://opencosmos.ai/studio/api/eject/{ComponentName}` (JSON response)
 
 ## Resources
-- GitHub: https://github.com/shalomormsby/opencosmos-ui
+- GitHub: https://github.com/opencosmos-ai/opencosmos-ui
 - NPM: https://www.npmjs.com/package/@opencosmos/ui
-- AGENTS.md: https://github.com/shalomormsby/opencosmos-ui/blob/main/AGENTS.md
+- AGENTS.md: https://github.com/opencosmos-ai/opencosmos-ui/blob/main/AGENTS.md

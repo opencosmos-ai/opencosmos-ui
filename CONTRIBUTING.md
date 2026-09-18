@@ -9,7 +9,7 @@ Thank you for your interest in contributing! This project is built on the belief
 3. **Set up your environment:**
 
 ```bash
-git clone https://github.com/shalomormsby/opencosmos-ui.git
+git clone https://github.com/opencosmos-ai/opencosmos-ui.git
 cd opencosmos-ui
 pnpm install
 pnpm build
@@ -24,7 +24,7 @@ pnpm build
 
 ### Reporting Bugs
 
-- Open an issue on [GitHub Issues](https://github.com/shalomormsby/opencosmos-ui/issues)
+- Open an issue on [GitHub Issues](https://github.com/opencosmos-ai/opencosmos-ui/issues)
 - Include: steps to reproduce, expected vs actual behavior, browser/OS, and screenshots if applicable
 - Check existing issues first to avoid duplicates
 

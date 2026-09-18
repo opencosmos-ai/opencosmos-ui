@@ -6,11 +6,11 @@
     "author": "Shalom Ormsby",
     "repository": {
         "type": "git",
-        "url": "https://github.com/shalomormsby/opencosmos-ui.git",
+        "url": "https://github.com/opencosmos-ai/opencosmos-ui.git",
         "directory": "packages/tokens"
     },
     "homepage": "https://opencosmos.ai/studio",
-    "bugs": "https://github.com/shalomormsby/opencosmos-ui/issues",
+    "bugs": "https://github.com/opencosmos-ai/opencosmos-ui/issues",
     "keywords": [
         "design-tokens",
         "design-system",

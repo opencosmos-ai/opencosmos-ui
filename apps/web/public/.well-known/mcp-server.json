@@ -5,7 +5,7 @@
       "version": "0.8.0",
       "description": "Model Context Protocol server for OpenCosmos UI — discover, integrate, and eject 100 accessible React components with AI assistants",
       "source": "https://www.npmjs.com/package/@opencosmos/mcp",
-      "repository": "https://github.com/shalomormsby/opencosmos-ui/tree/main/packages/mcp",
+      "repository": "https://github.com/opencosmos-ai/opencosmos-ui/tree/main/packages/mcp",
       "install": {
         "command": "npx",
         "args": ["@opencosmos/mcp"]

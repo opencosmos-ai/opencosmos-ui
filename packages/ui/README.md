@@ -3,14 +3,14 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opencosmos/ui?color=indigo&style=flat-square)](https://www.npmjs.com/package/@opencosmos/ui)
-[![License](https://img.shields.io/npm/l/@opencosmos/ui?color=blue&style=flat-square)](https://github.com/shalomormsby/opencosmos-ui/blob/main/LICENSE)
+[![License](https://img.shields.io/npm/l/@opencosmos/ui?color=blue&style=flat-square)](https://github.com/opencosmos-ai/opencosmos-ui/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/npm/dt/@opencosmos/ui?color=teal&style=flat-square)](https://www.npmjs.com/package/@opencosmos/ui)
 
 **OpenCosmos UI — Make it Lovable.**
 
 Components that feel alive. Themes with real personality. Motion your users control. Designed for humans. Fluent with AI.
 
-[Documentation](https://opencosmos.ai/studio) | [Components](https://opencosmos.ai/studio/components) | [GitHub](https://github.com/shalomormsby/opencosmos-ui)
+[Documentation](https://opencosmos.ai/studio) | [Components](https://opencosmos.ai/studio/components) | [GitHub](https://github.com/opencosmos-ai/opencosmos-ui)
 
 </div>
 

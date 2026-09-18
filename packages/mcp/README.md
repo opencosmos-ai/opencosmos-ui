@@ -244,13 +244,13 @@ The server runs in stdio mode, communicating via stdin/stdout per the MCP specif
 ## Documentation
 
 - **Full Documentation**: https://opencosmos.ai/studio/
-- **GitHub**: https://github.com/shalomormsby/opencosmos-ui
+- **GitHub**: https://github.com/opencosmos-ai/opencosmos-ui
 - **MCP Specification**: https://modelcontextprotocol.io/
 
 ## Support
 
 For issues or questions:
-- GitHub Issues: https://github.com/shalomormsby/opencosmos-ui/issues
+- GitHub Issues: https://github.com/opencosmos-ai/opencosmos-ui/issues
 - Documentation: https://opencosmos.ai/studio/#mcp-server
 
 ## License

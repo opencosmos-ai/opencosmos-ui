@@ -129,7 +129,7 @@ export function OverviewTab() {
                             View the complete README and API documentation
                         </p>
                         <a
-                            href="https://github.com/shalomormsby/opencosmos-ui/tree/main/packages/mcp"
+                            href="https://github.com/opencosmos-ai/opencosmos-ui/tree/main/packages/mcp"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-sm text-[var(--color-primary)] hover:underline"
@@ -172,7 +172,7 @@ export function OverviewTab() {
                             Found a bug or have a feature request?
                         </p>
                         <a
-                            href="https://github.com/shalomormsby/opencosmos-ui/issues"
+                            href="https://github.com/opencosmos-ai/opencosmos-ui/issues"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-sm text-[var(--color-primary)] hover:underline"

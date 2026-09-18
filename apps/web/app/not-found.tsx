@@ -26,7 +26,7 @@ export default function NotFound() {
             className="gap-2"
           >
             <a
-              href="https://github.com/shalomormsby/opencosmos-ui"
+              href="https://github.com/opencosmos-ai/opencosmos-ui"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -102,7 +102,7 @@ export default function NotFound() {
             <p className="text-sm text-[var(--color-text-muted)] pb-[75px] md:pb-[100px]">
               If this problem persists, please{' '}
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/issues"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/issues"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--color-primary)] hover:underline"
@@ -125,9 +125,9 @@ export default function NotFound() {
               title: "Docs",
               links: [
                 { label: "Getting Started", href: "/docs/getting-started" },
-                { label: "Design Philosophy", href: "https://github.com/shalomormsby/opencosmos-ui/blob/main/DESIGN-PHILOSOPHY.md", external: true },
-                { label: "README.md", href: "https://github.com/shalomormsby/opencosmos-ui/blob/main/README.md", external: true },
-                { label: "AGENTS.md", href: "https://github.com/shalomormsby/opencosmos-ui/blob/main/AGENTS.md", external: true }
+                { label: "Design Philosophy", href: "https://github.com/opencosmos-ai/opencosmos-ui/blob/main/DESIGN-PHILOSOPHY.md", external: true },
+                { label: "README.md", href: "https://github.com/opencosmos-ai/opencosmos-ui/blob/main/README.md", external: true },
+                { label: "AGENTS.md", href: "https://github.com/opencosmos-ai/opencosmos-ui/blob/main/AGENTS.md", external: true }
               ]
             },
             {
