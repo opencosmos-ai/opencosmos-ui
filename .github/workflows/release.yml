@@ -38,10 +38,15 @@ jobs:
         with:
           node-version: 24
 
-      # Trusted publishing needs npm >= 11.5.1; Node 24 does not reliably ship it.
-      - name: Upgrade npm for trusted publishing
+      # Trusted publishing needs npm >= 11.5.1 and the runner's bundled npm is not
+      # guaranteed to be new enough. Pinned to a major rather than `@latest`:
+      # `@latest` silently pulled npm 12 into the publish path the day it was
+      # added, unreviewed — the same floating-dependency hazard that moved turbo
+      # 2.10.11 -> 2.11.1 inside an unrelated PR. A major bump to the tool that
+      # performs the publish should be a deliberate commit, not a Tuesday.
+      - name: Ensure npm supports trusted publishing
         run: |
-          npm install -g npm@latest
+          npm install -g npm@12
           npm --version
 
       - name: Setup pnpm
@@ -69,10 +74,16 @@ jobs:
           NPM_CONFIG_PROVENANCE: true
 
       # The check that closes ADR 0014's hole. changesets has reported a publish
-      # it did not perform — printing "Successfully published" for all four
-      # packages and tagging all four while one never reached npm. This asserts
-      # against the registry instead, and runs whether or not the step above
-      # published: either way, a version in a package.json that npm does not
-      # have means a release was lost.
+      # it did not perform — printing "Successfully published" and tagging the
+      # release while the version never reached npm. This asserts against the
+      # registry instead.
+      #
+      # Skipped when the step above found changesets, because that is the
+      # Version-Packages-PR path: `changeset version` runs in *this working
+      # tree* to build the PR, so package.json here reads the next version while
+      # main and npm both correctly still hold the current one. Verifying then
+      # compares a version that deliberately does not exist yet — which failed a
+      # release on 18 Sept that had done nothing wrong.
       - name: Verify every version reached the registry
+        if: steps.changesets.outputs.has-changesets != 'true'
         run: pnpm verify:published
