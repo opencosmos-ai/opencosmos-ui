@@ -1,7 +1,7 @@
 /**
  * Component Registry for Sage UI
  *
- * This registry contains metadata for all 100 components in @opencosmos/ui,
+ * This registry contains metadata for all 104 components in @opencosmos/ui,
  * organized into 7 core functional categories plus 4 specialty categories.
  *
  * Core Categories (7):
@@ -766,7 +766,7 @@ export const COMPONENT_REGISTRY: Record<string, ComponentMetadata> = {
   },
 
   // ============================================================================
-  // DATA DISPLAY (6)
+  // DATA DISPLAY (7)
   // ============================================================================
   avatar: {
     name: 'Avatar',
@@ -971,8 +971,26 @@ export const COMPONENT_REGISTRY: Record<string, ComponentMetadata> = {
     example: `<DescriptionList items={[\n  { label: 'Name', value: 'John Doe' },\n  { label: 'Email', value: 'john@example.com' },\n  { label: 'Role', value: <Badge>Admin</Badge> },\n]} />`,
   },
 
+  'opencosmos-icon': {
+    name: 'OpenCosmosIcon',
+    category: 'data-display',
+    description: 'OpenCosmos brand mark — an orbital system that inherits text colour via currentColor',
+    keywords: ['icon', 'logo', 'brand', 'mark', 'opencosmos', 'svg'],
+    useCases: [
+      'Application header and sidebar branding',
+      'Inline product mark alongside a wordmark',
+      'Avatar and favicon fallbacks',
+    ],
+    dependencies: [],
+    props: {
+      size: { type: 'number', default: '20', description: 'Width and height in pixels' },
+      className: { type: 'string', default: "''", description: 'Additional className' },
+    },
+    example: `<OpenCosmosIcon size={32} className="text-foreground" />`,
+  },
+
   // ============================================================================
-  // LAYOUT (8)
+  // LAYOUT (9)
   // ============================================================================
   accordion: {
     name: 'Accordion',
@@ -1316,6 +1334,31 @@ export const COMPONENT_REGISTRY: Record<string, ComponentMetadata> = {
       showCustomizer: { type: 'boolean', default: 'true', description: 'Show customizer panel' },
     },
     example: `<PageTemplate title="Documentation" description="Learn the design system.">\n  <div>Content here.</div>\n</PageTemplate>`,
+  },
+
+  'app-sidebar': {
+    name: 'AppSidebar',
+    category: 'layout',
+    description: 'Application shell sidebar — pushes content on desktop, overlays it over a dismissable scrim below 768px',
+    keywords: ['sidebar', 'navigation', 'shell', 'drawer', 'rail', 'app-shell', 'responsive'],
+    useCases: [
+      'Primary application navigation',
+      'Collapsible application shell',
+      'Conversation or document history panels',
+      'Persistent account and sign-in footer',
+    ],
+    dependencies: [],
+    props: {
+      logo: { type: 'React.ReactNode', description: 'Icon always visible (32x32); clicking it toggles open/closed' },
+      title: { type: 'string', description: 'Wordmark shown beside the logo when expanded' },
+      items: { type: 'AppSidebarNavItem[]', default: '[]', description: 'Navigation items rendered below the header' },
+      bottomItems: { type: 'AppSidebarNavItem[]', default: '[]', description: 'Navigation items rendered above the footer' },
+      children: { type: 'React.ReactNode', description: 'Body slot in the mid-section; visible only when expanded' },
+      footer: { type: 'React.ReactNode', description: 'Footer slot for the auth section, user avatar or sign-in prompt' },
+      className: { type: 'string', description: 'Additional className for the aside element' },
+    },
+    subComponents: ['AppSidebarProvider', 'AppSidebarInset', 'useAppSidebar', 'useIsMobile'],
+    example: `<AppSidebarProvider>\n  <AppSidebar logo={<OpenCosmosIcon />} title="OpenCosmos" items={navItems} />\n  <AppSidebarInset>{children}</AppSidebarInset>\n</AppSidebarProvider>`,
   },
 
   // ============================================================================
