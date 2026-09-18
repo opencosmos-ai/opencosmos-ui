@@ -1,5 +1,20 @@
 # @opencosmos/mcp
 
+## 0.8.8 - 2026-09-18
+
+### Patch Changes
+
+- 6e9ea3d: Describe `AppSidebar` and `OpenCosmosIcon` in the registry
+  
+  Both were exported from `@opencosmos/ui` and installable, and neither appeared
+  in the MCP registry — so an agent asking this library what it offers was never
+  told they existed, and would reasonably write a bespoke sidebar instead.
+  
+  `AppSidebar` gains its full prop surface and its four sub-exports
+  (`AppSidebarProvider`, `AppSidebarInset`, `useAppSidebar`, `useIsMobile`),
+  including the responsive behaviour that matters at the call site: it pushes
+  content on desktop and overlays it over a dismissable scrim below 768px.
+
 ## 0.8.7 - 2026-09-18
 
 ### Patch Changes
