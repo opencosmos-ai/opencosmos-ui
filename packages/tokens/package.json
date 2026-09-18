@@ -1,6 +1,6 @@
 {
     "name": "@opencosmos/tokens",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Design tokens for OpenCosmos/UI — colors, typography, spacing, motion curves, and syntax highlighting across Studio, Terra, and Volt themes.",
     "license": "MIT",
     "author": "Shalom Ormsby",

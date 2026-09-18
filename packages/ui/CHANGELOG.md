@@ -1,5 +1,18 @@
 # @opencosmos/ui
 
+## 1.10.4 - 2026-09-18
+
+### Patch Changes
+
+- d1908a2: Point `repository.url` and `bugs` at `opencosmos-ai/opencosmos-ui`
+
+  The repository moved from `shalomormsby/` to the `opencosmos-ai` organization.
+  npm renders both fields on the package page, so until they are republished every
+  listing sends readers through a redirect to reach the source or file an issue.
+
+- Updated dependencies [d1908a2]
+  - @opencosmos/tokens@1.0.2
+
 ## 1.10.3 - 2026-08-17
 
 ### Patch Changes

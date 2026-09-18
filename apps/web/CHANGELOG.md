@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.32 - 2026-09-18
+
+### Patch Changes
+
+- Updated dependencies [d1908a2]
+  - @opencosmos/constellation@0.2.2
+  - @opencosmos/tokens@1.0.2
+  - @opencosmos/mcp@0.8.7
+  - @opencosmos/ui@1.10.4
+
 ## 0.1.31 - 2026-08-17
 
 ### Patch Changes
