@@ -67,3 +67,12 @@ jobs:
           # Redundant under OIDC, which always attaches provenance, but explicit
           # so a fallback to token auth cannot silently publish unsigned.
           NPM_CONFIG_PROVENANCE: true
+
+      # The check that closes ADR 0014's hole. changesets has reported a publish
+      # it did not perform — printing "Successfully published" for all four
+      # packages and tagging all four while one never reached npm. This asserts
+      # against the registry instead, and runs whether or not the step above
+      # published: either way, a version in a package.json that npm does not
+      # have means a release was lost.
+      - name: Verify every version reached the registry
+        run: pnpm verify:published

@@ -12,7 +12,8 @@
         "changeset": "changeset",
         "adr:index": "node scripts/adr-index.mjs",
         "version-packages": "changeset version && node scripts/append-changelog-date.js",
-        "release": "turbo run build && changeset publish"
+        "release": "turbo run build && changeset publish",
+        "verify:published": "node scripts/verify-published.mjs"
     },
     "devDependencies": {
         "@changesets/cli": "^3.0.3",
