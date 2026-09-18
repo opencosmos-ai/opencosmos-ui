@@ -29,11 +29,18 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REGISTRY = process.env.npm_config_registry?.replace(/\/$/, '') || 'https://registry.npmjs.org';
 
-// npm's CDN can lag a little behind a publish, so a miss is retried before it is
-// believed. Today's real failure was still absent after minutes, so this only
-// smooths propagation — it cannot mask a genuinely lost release.
-const ATTEMPTS = 5;
-const BACKOFF_MS = [0, 2000, 5000, 10000, 20000];
+// npm's CDN lags a publish by appreciably more than first assumed. Measured on
+// 18 Sept: `@opencosmos/mcp@0.8.8` published at 21:48:29 and was still 404 at
+// 21:49:10 — a ~40s window was not enough, and the first version of this script
+// failed a release that had in fact succeeded.
+//
+// A guard that cries wolf gets switched off, which would be worse than not
+// having one. So the window is now ~5 minutes. That is still bounded, and it
+// cannot mask a genuinely lost release: the ui@1.10.4 failure this guard exists
+// for was still absent three minutes later, when `changeset publish` itself
+// re-queried the registry and agreed the version was missing.
+const BACKOFF_MS = [0, 5000, 10000, 20000, 30000, 60000, 60000, 60000];
+const ATTEMPTS = BACKOFF_MS.length;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
