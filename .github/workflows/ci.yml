@@ -19,6 +19,10 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          # `changeset status --since` walks history to find which packages a PR
+          # touches, so it needs the base branch, not a depth-1 clone.
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -48,3 +52,14 @@ jobs:
 
       - name: Check Bundle Sizes
         run: pnpm size:check
+
+      # ADR 0006: a change affecting a published package ships with a changeset,
+      # because the changeset body is the text a consumer reads on npm. This was
+      # prose only — a PR could change a package and release nothing, and the
+      # omission surfaces weeks later as "why is that fix not published?".
+      #
+      # Skipped on the Version Packages PR, which exists to *consume* changesets
+      # and so legitimately has none left.
+      - name: Check for a changeset
+        if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
+        run: pnpm changeset status --since=origin/${{ github.base_ref }}
