@@ -4,12 +4,19 @@ on:
   push:
     branches:
       - main
+  # Lets the publish path be exercised without landing a release. Without this,
+  # the only way to learn that publishing is broken is to need it — which is how
+  # an expired NPM_TOKEN went unnoticed for a month while this workflow reported
+  # green, because changesets exits 0 when it has nothing to publish.
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
   contents: write
   pull-requests: write
+  # Required for npm trusted publishing: lets the runner mint the OIDC token
+  # that npm exchanges for short-lived publish credentials.
   id-token: write
 
 jobs:
@@ -20,11 +27,22 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
+      # `registry-url:` is deliberately absent. It makes setup-node write
+      # `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}` into .npmrc, and
+      # with no token in the environment that expands to an empty value. npm
+      # reads an empty token as "auth is already configured", never starts the
+      # OIDC exchange, and fails with a misleading E404 on publish. npmjs.org is
+      # the default registry, so omitting this changes nothing else.
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm >= 11.5.1; Node 24 does not reliably ship it.
+      - name: Upgrade npm for trusted publishing
+        run: |
+          npm install -g npm@latest
+          npm --version
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -32,13 +50,20 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      # v2 is the first release that supports trusted publishing: v1 wrote its
+      # own .npmrc whenever NPM_TOKEN was set and has no OIDC path. v2 removed
+      # token handling entirely and requires Changesets v3.
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
-          publish: pnpm run release
-          version: pnpm run version-packages
+          publish-script: pnpm run release
+          version-script: pnpm run version-packages
+          # Still a PAT rather than GITHUB_TOKEN: pushes made with GITHUB_TOKEN
+          # do not trigger workflows, so the Version Packages PR would never run
+          # CI and auto-merge would have nothing to wait on.
+          github-token: ${{ secrets.GH_TOKEN_FOR_CI }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_CI }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Redundant under OIDC, which always attaches provenance, but explicit
+          # so a fallback to token auth cannot silently publish unsigned.
           NPM_CONFIG_PROVENANCE: true
