@@ -648,7 +648,7 @@ See individual font licenses on [Google Fonts](https://fonts.google.com/).
 ## Support
 
 - **Documentation**: [OpenCosmos Studio](https://opencosmos.ai/studio/#themes/typography)
-- **Issues**: [GitHub Issues](https://github.com/shalomormsby/opencosmos-ui/issues)
+- **Issues**: [GitHub Issues](https://github.com/opencosmos-ai/opencosmos-ui/issues)
 - **Questions**: Open a discussion or reach out
 
 ---

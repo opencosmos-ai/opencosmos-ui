@@ -10,11 +10,11 @@
     "author": "Shalom Ormsby",
     "repository": {
         "type": "git",
-        "url": "https://github.com/shalomormsby/opencosmos-ui.git",
+        "url": "https://github.com/opencosmos-ai/opencosmos-ui.git",
         "directory": "packages/constellation"
     },
     "homepage": "https://opencosmos.ai/studio",
-    "bugs": "https://github.com/shalomormsby/opencosmos-ui/issues",
+    "bugs": "https://github.com/opencosmos-ai/opencosmos-ui/issues",
     "keywords": [
         "react",
         "knowledge-graph",

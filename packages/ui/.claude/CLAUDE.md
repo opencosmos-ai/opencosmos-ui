@@ -235,5 +235,5 @@ For complete props, variants, and examples for all 100 components:
 ## Resources
 
 - Docs: https://opencosmos.ai/studio/docs
-- GitHub: https://github.com/shalomormsby/opencosmos-ui
+- GitHub: https://github.com/opencosmos-ai/opencosmos-ui
 - NPM: https://www.npmjs.com/package/@opencosmos/ui

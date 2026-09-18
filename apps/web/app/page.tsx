@@ -40,7 +40,7 @@ export default function LandingPage() {
             className="gap-2"
           >
             <a
-              href="https://github.com/shalomormsby/opencosmos-ui"
+              href="https://github.com/opencosmos-ai/opencosmos-ui"
               target="_blank"
               rel="noopener noreferrer"
             >

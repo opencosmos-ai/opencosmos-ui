@@ -195,7 +195,7 @@ export function OverviewSection() {
             <p className="text-xs text-[var(--color-text-muted)]">
               → Read{' '}
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/AGENTS.md"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/AGENTS.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--color-primary)] hover:underline"
@@ -415,7 +415,7 @@ export function OverviewSection() {
               <p className="text-xs text-[var(--color-text-muted)] mt-3">
                 → See{' '}
                 <a
-                  href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
+                  href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-primary)] hover:underline"
@@ -501,7 +501,7 @@ export function OverviewSection() {
               <p className="text-xs text-[var(--color-text-secondary)]">
                 Design tokens as importable JavaScript objects. Comprehensive prop tables and examples for every component. AI collaboration history documented in{' '}
                 <a
-                  href="https://github.com/shalomormsby/opencosmos-ui/blob/main/AGENTS.md"
+                  href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/AGENTS.md"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-primary)] hover:underline"
@@ -540,7 +540,7 @@ export function OverviewSection() {
 
         <div className="mt-6 text-center">
           <a
-            href="https://github.com/shalomormsby/opencosmos-ui/blob/main/DESIGN-PHILOSOPHY.md"
+            href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/DESIGN-PHILOSOPHY.md"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--color-primary)] hover:underline text-sm font-medium"
@@ -798,7 +798,7 @@ export function ThemeSwitcher() {
                 2. Browse Components →
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/tree/main/packages/ui"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/tree/main/packages/ui"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -818,7 +818,7 @@ export function ThemeSwitcher() {
             </p>
             <div className="space-y-2 text-sm">
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -829,7 +829,7 @@ export function ThemeSwitcher() {
                 2. Explore Tokens →
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/DESIGN-PHILOSOPHY.md"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/DESIGN-PHILOSOPHY.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -849,7 +849,7 @@ export function ThemeSwitcher() {
             </p>
             <div className="space-y-2 text-sm">
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md#architecture"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md#architecture"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -857,7 +857,7 @@ export function ThemeSwitcher() {
                 1. Architecture Guide →
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md#development-workflow"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md#development-workflow"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -865,7 +865,7 @@ export function ThemeSwitcher() {
                 2. Component Workflow →
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui"
+                href="https://github.com/opencosmos-ai/opencosmos-ui"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -885,7 +885,7 @@ export function ThemeSwitcher() {
             </p>
             <div className="space-y-2 text-sm">
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/AGENTS.md"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/AGENTS.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -893,7 +893,7 @@ export function ThemeSwitcher() {
                 1. AGENTS.md →
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -1576,7 +1576,7 @@ export function App() {
                     <li>• Theming Deep Dive</li>
                   </ul>
                   <a
-                    href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
+                    href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block mt-2 text-xs text-[var(--color-primary)] hover:underline"
@@ -1634,7 +1634,7 @@ export function Dashboard() {
                 📖 Full Documentation
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/issues"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/issues"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--color-primary)] hover:underline"
@@ -1642,7 +1642,7 @@ export function Dashboard() {
                 🐛 Report Issues
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/discussions"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/discussions"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--color-primary)] hover:underline"
@@ -1704,7 +1704,7 @@ export function Dashboard() {
             </p>
             <div className="space-y-2 text-sm">
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -1728,7 +1728,7 @@ export function Dashboard() {
             </p>
             <div className="space-y-2 text-sm">
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md#development-workflow"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md#development-workflow"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -1736,7 +1736,7 @@ export function Dashboard() {
                 → Component Workflow
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md#architecture"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md#architecture"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -1744,7 +1744,7 @@ export function Dashboard() {
                 → Architecture Guide
               </a>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/CLI_COMMANDS.md"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/CLI_COMMANDS.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[var(--color-primary)] hover:underline"
@@ -1846,7 +1846,7 @@ export function Dashboard() {
                 </p>
                 <div className="space-y-1">
                   <a
-                    href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
+                    href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/docs/SAGE_DESIGN_SYSTEM_STRATEGY.md"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-xs text-[var(--color-primary)] hover:underline"
@@ -1854,7 +1854,7 @@ export function Dashboard() {
                     📖 Check the Usage Guide
                   </a>
                   <a
-                    href="https://github.com/shalomormsby/opencosmos-ui/issues"
+                    href="https://github.com/opencosmos-ai/opencosmos-ui/issues"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-xs text-[var(--color-primary)] hover:underline"
@@ -1862,7 +1862,7 @@ export function Dashboard() {
                     🐛 Report a bug
                   </a>
                   <a
-                    href="https://github.com/shalomormsby/opencosmos-ui/discussions"
+                    href="https://github.com/opencosmos-ai/opencosmos-ui/discussions"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-xs text-[var(--color-primary)] hover:underline"
@@ -1887,7 +1887,7 @@ export function Dashboard() {
                 If you're developing or modifying OpenCosmos Studio (this documentation site), start here:
               </p>
               <a
-                href="https://github.com/shalomormsby/opencosmos-ui/blob/main/apps/web/README.md"
+                href="https://github.com/opencosmos-ai/opencosmos-ui/blob/main/apps/web/README.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-[var(--color-primary)] hover:underline font-medium"
@@ -1910,7 +1910,7 @@ export function Dashboard() {
           </p>
           <div className="flex items-center justify-center gap-4">
             <a
-              href="https://github.com/shalomormsby/opencosmos-ui"
+              href="https://github.com/opencosmos-ai/opencosmos-ui"
               target="_blank"
               rel="noopener noreferrer"
             >

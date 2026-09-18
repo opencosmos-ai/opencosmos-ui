@@ -351,7 +351,7 @@ function formatInstallationInstructions(component: ComponentMetadata): string {
 
   output += `## Additional Resources\n\n`;
   output += `- **Documentation:** https://opencosmos.ai/studio/#${component.category}/${component.name.toLowerCase().replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}\n`;
-  output += `- **GitHub:** https://github.com/shalomormsby/opencosmos-ui/tree/main/packages/ui/src/components/${component.category}\n`;
+  output += `- **GitHub:** https://github.com/opencosmos-ai/opencosmos-ui/tree/main/packages/ui/src/components/${component.category}\n`;
 
   return output;
 }
