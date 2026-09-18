@@ -27,6 +27,7 @@ Docs-only changes need no changeset. Nothing published is affected, and an empty
 - The version number is a function of the changesets on `main`, not of anyone's judgement at release time. Internal dependency ranges are updated for free (`updateInternalDependencies: "patch"`).
 - Every published version has a changelog entry, because the entry is the input rather than an afterthought.
 - Publishing requires a working `NPM_TOKEN` in CI. This has bitten once: 1.9.0 was version-bumped and merged but never published, because the token had expired and npm returned a 404 that read like a missing package. The version existed in git and in the changelog and not on npm for two weeks, while a consumer's bug ([0003](0003-precompiled-styles-css-over-a-consumer-safelist.md)) waited on it. **A merged Version Packages PR is not evidence that a version is on npm.** Check the registry.
+  _Superseded in part by [0014](0014-publish-through-trusted-publishing-not-a-token.md) (2026-09-18): there is no longer an `NPM_TOKEN` — publishing is via trusted publishing (OIDC). The rule in bold above still holds, and now extends further: the release run's own "Successfully published" message has also proved wrong._
 - The Version Packages PR is a queue. Several changesets can accumulate in one release, which is usually desirable and occasionally means a fix waits for an unrelated feature.
 - `changeset` config sets `commit: false`, so changesets are committed with the change they describe rather than separately.
 
