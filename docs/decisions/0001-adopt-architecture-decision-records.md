@@ -1,6 +1,6 @@
 # 0001 — Adopt Architecture Decision Records
 
-**Date:** 2026-08-22 · **Status:** Accepted · **Relates to** [opencosmos ADR 0001](https://github.com/shalomormsby/opencosmos)
+**Date:** 2026-08-22 · **Status:** Accepted · **Relates to** [opencosmos ADR 0001](https://github.com/opencosmos-ai/opencosmos)
 
 _Records why load-bearing choices were made, so they survive the session that made them and are not undone by someone who cannot see the reason._
 
@@ -20,7 +20,7 @@ The value of a decision record is highest exactly where the reasoning is least v
 
 ## Decision
 
-Record each load-bearing decision as a small, numbered, immutable markdown file in `docs/decisions/`, using the Nygard format already running in the sibling [opencosmos](https://github.com/shalomormsby/opencosmos) and Agency of One repositories. Same conventions, deliberately, so all three read the same way and a decision that spans two of them can cross-reference rather than diverge.
+Record each load-bearing decision as a small, numbered, immutable markdown file in `docs/decisions/`, using the Nygard format already running in the sibling [opencosmos](https://github.com/opencosmos-ai/opencosmos) and Agency of One repositories. Same conventions, deliberately, so all three read the same way and a decision that spans two of them can cross-reference rather than diverge.
 
 ### Conventions
 

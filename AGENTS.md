@@ -10,7 +10,7 @@ Last updated: 2026-03-07
 
 **OpenCosmos UI (SDE)** is the source of truth for the Sage design system — the component library, design tokens, MCP server, and interactive documentation site. Everything published under the `@thesage/*` npm scope originates here.
 
-This repo is **not** the product ecosystem. Consumer applications (portfolio, creative-powerup, sage-stocks) live in a separate [ecosystem repo](https://github.com/shalomormsby/ecosystem). Those apps install `@opencosmos/ui` from npm. This repo is where those packages are built, tested, documented, and published.
+This repo is **not** the product ecosystem. The consuming applications live elsewhere and install `@opencosmos/ui` from npm: [opencosmos-ai/opencosmos](https://github.com/opencosmos-ai/opencosmos) (opencosmos.ai), [shalomormsby/portfolio](https://github.com/shalomormsby/portfolio) and [shalomormsby/creative-powerup](https://github.com/shalomormsby/creative-powerup). This repo is where the packages are built, tested, documented, and published.
 
 ```
 opencosmos-ui/

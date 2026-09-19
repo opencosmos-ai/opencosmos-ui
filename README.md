@@ -105,7 +105,7 @@ export function MyComponent() {
 
 | Package | Description |
 |---------|-------------|
-| [`@opencosmos/ui`](https://www.npmjs.com/package/@opencosmos/ui) | 100 components, providers, hooks, theme system |
+| [`@opencosmos/ui`](https://www.npmjs.com/package/@opencosmos/ui) | 104 components, providers, hooks, theme system |
 | [`@opencosmos/tokens`](https://www.npmjs.com/package/@opencosmos/tokens) | Design tokens (colors, typography, spacing, motion) |
 | [`@opencosmos/mcp`](https://www.npmjs.com/package/@opencosmos/mcp) | MCP server for AI-assisted component discovery |
 | [`@opencosmos/constellation`](https://www.npmjs.com/package/@opencosmos/constellation) | Living knowledge-graph visualizer — a React wrapper around `@cosmos.gl/graph` |
@@ -257,7 +257,7 @@ pnpm release                      # Build and publish to NPM
 opencosmos-ui/
 ├── packages/
 │   ├── ui/                    # @opencosmos/ui — Component library
-│   │   ├── src/components/    # 100 components by functional category
+│   │   ├── src/components/    # 104 components by functional category
 │   │   ├── src/hooks/         # useTheme, useMotionPreference
 │   │   ├── src/providers/     # ThemeProvider, TooltipProvider
 │   │   └── src/lib/           # Utilities, stores

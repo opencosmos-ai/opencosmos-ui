@@ -5,7 +5,7 @@
 # Package: pnpm add @opencosmos/ui
 # MCP: npx @opencosmos/mcp
 
-> 100 components | 11 categories | 3 themes | TypeScript strict mode | MIT license
+> 104 components | 11 categories | 3 themes | TypeScript strict mode | MIT license
 
 ---
 
@@ -1592,7 +1592,7 @@ All sizes are minified + brotli compressed, with all dependencies included.
 
 | Entrypoint | Import Path | Size | Limit |
 |------------|-------------|------|-------|
-| Core (all 100 components) | `@opencosmos/ui` | 146.4 KB | 450 KB |
+| Core (all 104 components) | `@opencosmos/ui` | 146.4 KB | 450 KB |
 | Tokens | `@opencosmos/ui/tokens` | 10.9 KB | 70 KB |
 | Forms (react-hook-form) | `@opencosmos/ui/forms` | 9.4 KB | 10 KB |
 | Utils | `@opencosmos/ui/utils` | 9.5 KB | 25 KB |
@@ -1609,7 +1609,7 @@ All sizes are minified + brotli compressed, with all dependencies included.
 
 # RECOMMENDED THIRD-PARTY PAIRINGS
 
-SDE covers 100 components. For gaps, these libraries integrate well with @opencosmos/ui styling and patterns:
+SDE covers 104 components. For gaps, these libraries integrate well with @opencosmos/ui styling and patterns:
 
 | Need | Library | Install | Notes |
 |------|---------|---------|-------|
