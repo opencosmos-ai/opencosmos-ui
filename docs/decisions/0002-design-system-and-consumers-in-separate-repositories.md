@@ -6,7 +6,7 @@ _The packages ship from here and are installed from npm there, so the design sys
 
 ## Context
 
-`@opencosmos/ui`, `@opencosmos/tokens`, `@opencosmos/mcp`, and `@opencosmos/constellation` are built, tested, documented, and published here. The applications that use them — portfolio, creative-powerup, stocks, cosmos — live in the [opencosmos](https://github.com/shalomormsby/opencosmos) repository and install the packages from npm at a pinned semver range, not through a workspace link.
+`@opencosmos/ui`, `@opencosmos/tokens`, `@opencosmos/mcp`, and `@opencosmos/constellation` are built, tested, documented, and published here. The applications that use them — portfolio, creative-powerup, stocks, cosmos — live in the [opencosmos](https://github.com/opencosmos-ai/opencosmos) repository and install the packages from npm at a pinned semver range, not through a workspace link.
 
 The obvious alternative was one monorepo containing both. It has real advantages: a change to a component and the app that consumes it land in one commit, one CI run proves both still work, and there is no version to bump.
 
@@ -16,7 +16,7 @@ The published artifact is also the thing under test. An app consuming `workspace
 
 ## Decision
 
-Two repositories. This one builds and publishes the packages; [opencosmos](https://github.com/shalomormsby/opencosmos) consumes them from npm.
+Two repositories. This one builds and publishes the packages; [opencosmos](https://github.com/opencosmos-ai/opencosmos) consumes them from npm.
 
 `apps/web` — OpenCosmos Studio — is the exception that makes this workable. It lives here and uses `workspace:*` references, so components can be developed and reviewed against a live application without a publish cycle. It is a documentation site, not a product: it has no business logic to bend the components toward.
 

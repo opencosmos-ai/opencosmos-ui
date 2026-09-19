@@ -228,7 +228,7 @@ Ejected components keep working with SDE themes and CSS variables. Also availabl
 
 ## Full API Reference
 
-For complete props, variants, and examples for all 100 components:
+For complete props, variants, and examples for all 104 components:
 - Web: https://opencosmos.ai/studio/llms-full.txt
 - MCP Server: `npx @opencosmos/mcp` (tools: list_components, search_components, get_component)
 

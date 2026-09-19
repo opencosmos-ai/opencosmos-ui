@@ -164,7 +164,7 @@ import { DragDropList, DragDropTable } from '@opencosmos/ui/dnd'
 | **Layout** | Accordion, Separator, ResizablePanels, Collapsible, Grid, Stack, Sidebar |
 | **Features** | Customizer, ThemeSwitcher, GlassSurface, Hero |
 
-This table isn't exhaustive — the package ships 100 components across 11 categories. For the complete, always-current list, run `npx @opencosmos/ui eject --list` or check `src/component-registry.ts`.
+This table isn't exhaustive — the package ships 104 components across 11 categories. For the complete, always-current list, run `npx @opencosmos/ui eject --list` or check `src/component-registry.ts`.
 
 ## Eject — full customization
 

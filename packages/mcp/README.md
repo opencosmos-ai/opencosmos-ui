@@ -6,7 +6,7 @@ Enable AI assistants like Claude Desktop, Cursor, and VS Code to browse, search,
 
 ## Features
 
-- 🔍 **Browse all 100 components** across 11 functional categories
+- 🔍 **Browse all 104 components** across 11 functional categories
 - 🔎 **Semantic search** by keywords, use cases, or functionality
 - 📖 **Detailed component info** including props, dependencies, and examples
 - 📦 **Installation instructions** with all required dependencies
@@ -184,7 +184,7 @@ Once configured, you can interact with the server through your AI assistant:
 
 > "Show me all components in the OpenCosmos UI"
 
-The AI will use `list_components` to display all 100 components organized by category.
+The AI will use `list_components` to display all 104 components organized by category.
 
 ### Search for Specific Functionality
 

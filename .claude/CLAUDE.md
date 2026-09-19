@@ -8,7 +8,7 @@ Last updated: 2026-03-07
 
 ## What This Repo Is
 
-OpenCosmos UI (SDE) is a monorepo that produces three npm packages and one web application. Consumer apps (portfolio, creative-powerup, sage-stocks) live in a [separate ecosystem repo](https://github.com/shalomormsby/ecosystem) and install `@opencosmos/ui` from npm.
+OpenCosmos UI (SDE) is a monorepo that produces **four** npm packages and one web application. The apps that consume them live elsewhere and install `@opencosmos/ui` from npm: [opencosmos-ai/opencosmos](https://github.com/opencosmos-ai/opencosmos) (opencosmos.ai), [shalomormsby/portfolio](https://github.com/shalomormsby/portfolio) and [shalomormsby/creative-powerup](https://github.com/shalomormsby/creative-powerup).
 
 **You are working on the design system itself — the packages and docs site, not the consumer apps.**
 
@@ -97,7 +97,7 @@ Runtime switching via CSS variables. ThemeProvider + Zustand + localStorage. Eac
 ### Subpath Exports (10)
 
 ```
-@opencosmos/ui           # Core: 100 components
+@opencosmos/ui           # Core: 104 components
 @opencosmos/ui/hooks     # useTheme, useMotionPreference, etc.
 @opencosmos/ui/providers # ThemeProvider, TooltipProvider
 @opencosmos/ui/utils     # cn(), validators
