@@ -365,16 +365,28 @@ Any result that uses a component needing a Provider is a time bomb.
 
 ---
 
-#### LESSON 3 — Vercel `vercel.json` must live at the repo root
+#### LESSON 3 — Vercel reads `vercel.json` from the Root Directory, wherever that points
 
-**Symptom:** Build config in `apps/web/vercel.json` is silently ignored; Vercel uses defaults.
+**Symptom:** Build config in a `vercel.json` is silently ignored; Vercel uses defaults or a
+different file's settings.
 
-**Root cause:** Vercel reads `vercel.json` from `rootDirectory`. When `rootDirectory` is `null`
-(repo root), only a root-level `vercel.json` is honoured. A `vercel.json` nested inside a
-subdirectory is **not** picked up automatically.
+**Root cause:** Vercel reads `vercel.json` from the project's **Root Directory** setting — not
+from the repository root. Only one copy is ever read, and which one flips if that setting changes.
 
-**Fix:** Keep `vercel.json` at the repo root. The file at `apps/web/vercel.json` is vestigial
-and can be removed.
+**Current state (verified 2026-09-18):** `opencosmos-studio` has Root Directory `apps/web`, so
+**`apps/web/vercel.json` is the live file**. The repo-root copy was dead and has been deleted.
+
+> This lesson previously said the opposite — that the root copy was live and `apps/web/vercel.json`
+> was "vestigial and can be removed". That was true when Root Directory was `null`. It was changed
+> to `apps/web` at some point afterwards and the documentation was not, so the guidance inverted
+> silently. Nothing broke, because both files held the same `buildCommand`.
+
+**How to tell which one is live — and how not to.** Both copies held an identical `buildCommand`,
+so the build log named neither. **Do not trust `.vercel/project.json`**: it is a local cache written
+by `vercel link`, and on 18 September it reported `rootDirectory: null` while the live project said
+`apps/web`. The test that actually works is to put a distinguishing `echo` marker in each candidate
+file's `buildCommand` and deploy once — the log then names the winner. `vercel project inspect`
+reads the live API and was correct, but a one-deploy experiment beats any reading of settings.
 
 ---
 
