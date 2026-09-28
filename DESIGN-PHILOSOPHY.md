@@ -116,6 +116,9 @@ The proof of philosophy. An interactive experience that embodies human-centered 
 **Creative Powerup** (`apps/creative-powerup/`)
 Community platform and experiment gallery for purpose-driven creators.
 
+**The games** (native iOS, built outside this ecosystem's web stack)
+The philosophy at play. [Xensō](https://opencosmos.ai/xenso) is a game you play as yourself (web reference live, iOS app in development), and a game for children is being designed on the same ground. They don't install `@opencosmos/ui`; they inherit the principles, set down for any studio in [docs/games/PLAY-PRINCIPLES.md](docs/games/PLAY-PRINCIPLES.md) ([ADR 0015](docs/decisions/0015-the-commons-for-play-lives-beside-the-design-system.md)).
+
 ### The Shared Foundation
 
 **Design System** (`packages/ui/` + `packages/tokens/`, this repo)

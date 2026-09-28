@@ -3,6 +3,14 @@
 *Component behaviour and its releases. **One change, one changelog — the one that owns the decision**; the system across all seven is written down once, in the [opencosmos root `CHANGELOG.md`](https://github.com/opencosmos-ai/opencosmos/blob/main/CHANGELOG.md#how-this-changelog-relates-to-the-others). A bug found in a consuming app but fixed here is logged **here** in full, and there in a sentence.*
 
 
+## 2026-09-27
+
+**Play Principles: the ecosystem's games share their foundations** (docs only, no release)
+
+- [docs/games/PLAY-PRINCIPLES.md](docs/games/PLAY-PRINCIPLES.md) sets down twelve principles for designing games that are Lovable by Design, each with a test a maker can run: allies not assets, the ethic felt rather than explained, no engineered compulsion, sustain without extraction, privacy by architecture (collect nothing from children), and the rest.
+- The games themselves are private and commercial. What they have learned about *how* to design is not, so it lives here in the commons, per [ADR 0015](docs/decisions/0015-the-commons-for-play-lives-beside-the-design-system.md). DESIGN-PHILOSOPHY now lists the games as expressions of the one mind.
+
+
 ## 2026-08-16
 
 **Button: ghost no longer turns invisible on hover** (`@opencosmos/ui` patch)
