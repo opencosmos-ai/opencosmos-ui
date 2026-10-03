@@ -44,7 +44,6 @@ export const LANDING_PHRASES: readonly string[] = [
   'It starts with a single heartfelt question.',
   'The most important question is the one you’re about to ask.',
   'The universe birthed itself into being so we can be here now.',
-  'The vast library of human wisdom opens its doors to you.',
   'The universe is discovering itself as you.',
 ];
 
