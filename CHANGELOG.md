@@ -3,6 +3,13 @@
 *Component behaviour and its releases. **One change, one changelog — the one that owns the decision**; the system across all seven is written down once, in the [opencosmos root `CHANGELOG.md`](https://github.com/opencosmos-ai/opencosmos/blob/main/CHANGELOG.md#how-this-changelog-relates-to-the-others). A bug found in a consuming app but fixed here is logged **here** in full, and there in a sentence.*
 
 
+## 2026-10-27
+
+**Studio: Next.js 15.5.28, for the framework's security fixes** (`apps/web` only, no release)
+
+- studio.opencosmos.ai ran Next.js 15.5.12, which carried the 15.x line's critical and high advisories: remote code execution in the image optimizer, proxy bypasses, request forgery. 15.5.28 is the line's patched release, so the site stays on Next 15 rather than taking a major upgrade inside a security fix.
+- The packages are untouched. The same audit upgraded opencosmos.ai to Next 16.4.3: [opencosmos#232](https://github.com/opencosmos-ai/opencosmos/pull/232).
+
 ## 2026-09-27
 
 **Play Principles: the ecosystem's games share their foundations** (docs only, no release)
