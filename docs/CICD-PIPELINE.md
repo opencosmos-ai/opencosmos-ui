@@ -78,7 +78,8 @@ The confusion often lies here: **Publishing only happens when the system sees NO
 
 ### 2. Release (`release.yml`)
 
-**Trigger:** Push to `main` only (not PRs)
+**Trigger:** Push to `main`, plus `workflow_dispatch` — so the publish path can be exercised
+without landing a release. A green Release run means *"no changesets"*, not *"publishing works"*.
 
 **Authentication:** npm Trusted Publishing via GitHub OIDC. No `NPM_TOKEN` secret is needed.
 
@@ -96,11 +97,19 @@ permissions:
 ```
 
 **How Trusted Publishing works here:**
-1. `id-token: write` allows GitHub to generate an OIDC token
-2. `actions/setup-node` with `registry-url: https://registry.npmjs.org` configures npm for registry auth
-3. Node 24 ships npm >= 11.5.1 which supports OIDC authentication natively
+1. `id-token: write` allows GitHub to mint an OIDC token
+2. npm exchanges it for short-lived publish credentials scoped to this repo and workflow file
+3. `changesets/action@v2` + `@changesets/cli@3` — v1 has no OIDC path at all
 4. `NPM_CONFIG_PROVENANCE: true` creates verifiable provenance attestations on each published package
-5. No `NPM_TOKEN` secret needed — authentication happens automatically via OIDC
+5. No `NPM_TOKEN` secret — there is no publish credential in this repository
+
+> **`registry-url` must NOT be set on `actions/setup-node`.** It writes
+> `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}` into `.npmrc`; with no token that
+> expands to an **empty string**, npm reads an empty token as "auth is already configured",
+> never starts the OIDC exchange, and fails with `E404` — *the same error an expired token
+> produces*. This is why the February 2026 attempt silently failed and was "fixed" by adding a
+> token back. npmjs.org is the default registry, so omitting the line changes nothing else.
+> See [ADR 0014](decisions/0014-publish-through-trusted-publishing-not-a-token.md).
 
 **Secret required:** `GH_TOKEN_FOR_CI` (for creating Version Packages PRs)
 
@@ -176,28 +185,52 @@ Trusted Publishing uses GitHub's OIDC identity provider to authenticate with npm
 ### How it works
 
 1. GitHub Actions generates a short-lived OIDC token (`id-token: write`)
-2. npm (>= 11.5.1, bundled with Node 24) exchanges the OIDC token for temporary publish credentials
+2. npm (>= 11.5.1) exchanges the OIDC token for temporary publish credentials
 3. `NPM_CONFIG_PROVENANCE: true` creates a verifiable link between each published package and its source commit
+
+The workflow runs `npm install -g npm@latest` before publishing: OIDC needs npm >= 11.5.1 and the
+runner's bundled npm is not guaranteed to be new enough.
 
 ### One-time setup on npmjs.com
 
-For each package (`@opencosmos/ui`, `@opencosmos/tokens`, `@opencosmos/mcp`):
+For **each** published package — `@opencosmos/ui`, `@opencosmos/tokens`, `@opencosmos/mcp`,
+`@opencosmos/constellation`:
 
 1. Go to the package on [npmjs.com](https://www.npmjs.com) > **Settings** > **Trusted Publishers**
 2. Click **Add GitHub Actions**
 3. Fill in:
-   - **Repository owner:** `shalomormsby`
+   - **Repository owner:** `opencosmos-ai`
    - **Repository name:** `opencosmos-ui`
-   - **Workflow filename:** `release.yml`
+   - **Workflow filename:** `release.yml` — the **filename only**, not `.github/workflows/release.yml`
    - **Environment:** *(leave blank)*
 4. Save
 
+> **Adding a fifth package is not purely a code change.** A new package needs its own Trusted
+> Publisher entry before its first release, or that release fails with the same misleading `E404`.
+> Renaming `release.yml` breaks publishing for every package until each entry is updated — the
+> filename is part of the credential.
+
 ### Requirements
 
-- **Node.js 24** — ships with npm >= 11.5.1, which supports Trusted Publishing
-- **`registry-url`** must be set in `actions/setup-node` (configured in `release.yml`)
+- **Node.js 24**, with npm upgraded in-job to >= 11.5.1
+- **`registry-url` must NOT be set** on `actions/setup-node` — it suppresses the OIDC exchange (above)
 - **`id-token: write`** permission (configured in `release.yml`)
-- No `NPM_TOKEN` secret needed in GitHub repository settings
+- **A Trusted Publisher entry per package** on npmjs.com
+- No `NPM_TOKEN` secret — it was deleted on 2026-09-18
+
+### Verifying a release
+
+**Check the registry, never the workflow's conclusion.**
+
+```bash
+for p in ui tokens mcp constellation; do
+  printf '%-16s ' "$p"; npm view "@opencosmos/$p" version
+done
+```
+
+A Release run has concluded `success`, printed "Successfully published" listing all four packages,
+and created git tags and GitHub releases for all four — while one package was never published.
+See [ADR 0014](decisions/0014-publish-through-trusted-publishing-not-a-token.md).
 
 ---
 

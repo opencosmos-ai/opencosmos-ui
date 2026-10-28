@@ -133,7 +133,7 @@ export const COMPONENT_COUNTS = {
  */
 export const MARKETING_COPY = {
   short: '100 production-ready components',
-  medium: '100 components across 7 core categories, plus specialty backgrounds and motion effects',
+  medium: '104 components across 7 core categories, plus specialty backgrounds and motion effects',
   long: '100 thoughtfully designed components organized by function: actions, forms, navigation, overlays, feedback, data display, and layout—plus specialty components for backgrounds, cursor interactions, and animated effects.',
 } as const;
 

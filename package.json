@@ -6,13 +6,18 @@
         "dev": "turbo run dev --concurrency 20",
         "build": "turbo run build",
         "lint": "turbo run lint",
+        "typecheck": "turbo run typecheck",
+        "test": "turbo run test",
+        "size:check": "turbo run size:check",
         "changeset": "changeset",
+        "adr:index": "node scripts/adr-index.mjs",
         "version-packages": "changeset version && node scripts/append-changelog-date.js",
-        "release": "turbo run build && changeset publish"
+        "release": "turbo run build && changeset publish",
+        "verify:published": "node scripts/verify-published.mjs"
     },
     "devDependencies": {
-        "@changesets/cli": "^2.29.8",
-        "turbo": "latest"
+        "@changesets/cli": "^3.0.3",
+        "turbo": "2.11.1"
     },
     "packageManager": "pnpm@10.26.1",
     "pnpm": {

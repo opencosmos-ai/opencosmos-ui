@@ -13,6 +13,14 @@ import { DesignTokensOverview } from '../DesignTokensOverview';
 
 type TokenTab = 'tokens-overview' | 'foundations' | 'brand' | 'colors' | 'typography' | 'spacing' | 'syntax' | 'motion' | 'interactions';
 
+function deriveTokenTab(activeItemId: string | undefined, current: TokenTab): TokenTab {
+  if (activeItemId && ['foundations', 'brand', 'colors', 'typography', 'spacing', 'syntax', 'motion', 'interactions'].includes(activeItemId)) {
+    return activeItemId as TokenTab;
+  }
+  if (!activeItemId || activeItemId === 'tokens') return 'tokens-overview';
+  return current;
+}
+
 interface TokensSectionProps {
   activeItemId?: string;
   breadcrumbs?: BreadcrumbItemLegacy[];
@@ -20,16 +28,17 @@ interface TokensSectionProps {
 }
 
 export function TokensSection({ activeItemId, breadcrumbs, onItemChange }: TokensSectionProps) {
-  const [activeTab, setActiveTab] = useState<TokenTab>('tokens-overview');
+  const [activeTab, setActiveTab] = useState<TokenTab>(
+    () => deriveTokenTab(activeItemId, 'tokens-overview')
+  );
 
-  // Update active tab when activeItemId changes
-  useEffect(() => {
-    if (activeItemId && ['foundations', 'brand', 'colors', 'typography', 'spacing', 'syntax', 'motion', 'interactions'].includes(activeItemId)) {
-      setActiveTab(activeItemId as TokenTab);
-    } else if (!activeItemId || activeItemId === 'tokens') {
-      setActiveTab('tokens-overview');
-    }
-  }, [activeItemId]);
+  // Adjust derived state during render when the prop changes, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+  if (activeItemId !== prevActiveItemId) {
+    setPrevActiveItemId(activeItemId);
+    setActiveTab((current) => deriveTokenTab(activeItemId, current));
+  }
 
   // Handle tab selection and notify parent
   const handleTabChange = (id: string) => {

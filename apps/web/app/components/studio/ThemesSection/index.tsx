@@ -10,6 +10,14 @@ import { ThemesOverview } from '../ThemesOverview';
 
 type ThemeTab = 'themes-overview' | 'palettes' | 'customizer' | 'typography' | 'typography-playground';
 
+function deriveThemeTab(activeItemId: string | undefined, current: ThemeTab): ThemeTab {
+    if (activeItemId && ['palettes', 'customizer', 'typography', 'typography-playground'].includes(activeItemId)) {
+        return activeItemId as ThemeTab;
+    }
+    if (!activeItemId || activeItemId === 'themes') return 'themes-overview';
+    return current;
+}
+
 interface ThemesSectionProps {
     activeItemId?: string;
     breadcrumbs?: BreadcrumbItemLegacy[];
@@ -17,16 +25,17 @@ interface ThemesSectionProps {
 }
 
 export function ThemesSection({ activeItemId, breadcrumbs, onItemChange }: ThemesSectionProps) {
-    const [activeTab, setActiveTab] = useState<ThemeTab>('themes-overview');
+    const [activeTab, setActiveTab] = useState<ThemeTab>(
+        () => deriveThemeTab(activeItemId, 'themes-overview')
+    );
 
-    // Update active tab when activeItemId changes
-    useEffect(() => {
-        if (activeItemId && ['palettes', 'customizer', 'typography', 'typography-playground'].includes(activeItemId)) {
-            setActiveTab(activeItemId as ThemeTab);
-        } else if (!activeItemId || activeItemId === 'themes') {
-            setActiveTab('themes-overview');
-        }
-    }, [activeItemId]);
+    // Adjust derived state during render when the prop changes, rather than in
+    // an effect: https://react.dev/learn/you-might-not-need-an-effect
+    const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+    if (activeItemId !== prevActiveItemId) {
+        setPrevActiveItemId(activeItemId);
+        setActiveTab((current) => deriveThemeTab(activeItemId, current));
+    }
 
     const handleTabChange = (id: string) => {
         setActiveTab(id as ThemeTab);

@@ -1182,7 +1182,7 @@ MyComponent: {
               </div>
             </Card>
 
-            {/* ── LESSON 3: vercel.json must be at repo root ────────────── */}
+            {/* ── LESSON 3: vercel.json is read from the Root Directory ─── */}
             <Card className="p-6 mb-6 border-l-4 border-l-orange-500">
               <div className="flex items-start gap-3 mb-4">
                 <AlertTriangle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
@@ -1202,32 +1202,34 @@ MyComponent: {
                 <div>
                   <h4 className="font-semibold mb-2 text-[var(--color-text-primary)]">Root Cause</h4>
                   <p className="text-sm text-[var(--color-text-secondary)]">
-                    Vercel reads <Code syntax="plain">vercel.json</Code> from its configured <Code syntax="plain">rootDirectory</Code>. When <Code syntax="plain">rootDirectory</Code> is <Code syntax="plain">null</Code> (the repo root), only a <Code syntax="plain">vercel.json</Code> at the <strong>repo root</strong> is honoured. A <Code syntax="plain">vercel.json</Code> nested inside a subdirectory (e.g. <Code syntax="plain">apps/web/vercel.json</Code>) is silently ignored.
+                    Vercel reads <Code syntax="plain">vercel.json</Code> from the project&apos;s <strong>Root Directory</strong> setting — not from the repository root. Exactly one copy is ever read, and <strong>which one flips if that setting changes</strong>. A second copy elsewhere in the repo is silently ignored, and because it usually holds the same settings, nothing breaks to tell you.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="font-semibold mb-2 text-[var(--color-text-primary)]">The Fix</h4>
                   <p className="text-sm text-[var(--color-text-secondary)] mb-3">
-                    Keep <Code syntax="plain">vercel.json</Code> at the repo root. Check <Code syntax="plain">.vercel/project.json</Code> to confirm what Vercel considers the root:
+                    Keep exactly one <Code syntax="plain">vercel.json</Code>, in the Root Directory. To find out which copy is live, <strong>do not read <Code syntax="plain">.vercel/project.json</Code></strong> — it is a local cache written by <Code syntax="plain">vercel link</Code> and goes stale. Put a distinguishing <Code syntax="plain">echo</Code> marker in each candidate file and deploy once; the build log names the winner:
                   </p>
                   <CollapsibleCodeBlock
                     id="troubleshoot-vercel-root"
-                    code={`// .vercel/project.json
-// If rootDirectory is null → vercel.json must be at repo root
-{
-  "projectId": "...",
-  "settings": {
-    "rootDirectory": null   // ← means repo root
-  }
-}
+                    code={`// Put a marker in EACH candidate file, then deploy once.
+// Whichever marker appears in the build log is the live file.
 
-// repo root vercel.json (correct location)
-{
-  "buildCommand": "pnpm turbo run build --filter=web --force",
-  "outputDirectory": "apps/web/.next",
-  "installCommand": "pnpm install"
-}`}
+// vercel.json  (repo root)
+{ "buildCommand": "echo FROM_REPO_ROOT && pnpm turbo run build --filter=web --force" }
+
+// apps/web/vercel.json
+{ "buildCommand": "echo FROM_APPS_WEB && pnpm turbo run build --filter=web --force" }
+
+// Build log, 2026-09-18:
+//   Running "echo CONFIG_SOURCE_APPS_WEB && pnpm turbo run build ..."
+//   CONFIG_SOURCE_APPS_WEB
+// → apps/web/vercel.json is live; the repo-root copy was deleted.
+
+// Why guessing failed: both files held an IDENTICAL buildCommand, so the
+// log named neither. .vercel/project.json said rootDirectory: null while
+// the live project said apps/web — the local cache was stale.`}
                     defaultCollapsed={false}
                     showCopy={true}
                   />

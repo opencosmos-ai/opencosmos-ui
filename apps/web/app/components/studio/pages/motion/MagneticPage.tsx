@@ -82,20 +82,6 @@ export function MagneticPage() {
                         </div>
                     </div>
 
-                    <div className="space-y-6">
-                        <div className="space-y-2">
-                            <div className="flex justify-between">
-                                <Label>Range</Label> // Actually, my implementation currently doesn't use Range for logic, just CSS size if I were using it, but simpler implementation uses bounding rect logic relative to cursor.
-                                {/* Wait, my implementation uses raw mouse move. It doesn't use range to restrict. Let's update the note or remove the control if it does nothing. My implementation logic: "middleX * strength". It happens whenever mouse moves OVER the element. So it's implicitly limited to element size. */}
-                                {/* To properly implement 'range', I'd need a simpler listener on window or a larger container. For now, let's remove Range control if it's unused in the code I wrote. */}
-                                {/* I wrote: `onMouseMove` on the element itself. This means it only magnetizes when INSIDE. Standard magnetic buttons usually have a larger hit area or run on a global listener near the target. */}
-                                {/* For a simple v1, "onMouseMove" inside the element is strictly "internal tension". 
-                                    If I want it to pull FROM OUTSIDE, I need a wrapper with padding. */}
-
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
 
                 {/* Notes about range */}

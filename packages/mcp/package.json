@@ -1,15 +1,15 @@
 {
   "name": "@opencosmos/mcp",
-  "version": "0.8.6",
+  "version": "0.8.9",
   "description": "Model Context Protocol server for OpenCosmos/UI - discover and integrate components with AI assistants",
   "author": "Shalom Ormsby",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shalomormsby/opencosmos-ui.git",
+    "url": "https://github.com/opencosmos-ai/opencosmos-ui.git",
     "directory": "packages/mcp"
   },
   "homepage": "https://opencosmos.ai/studio",
-  "bugs": "https://github.com/shalomormsby/opencosmos-ui/issues",
+  "bugs": "https://github.com/opencosmos-ai/opencosmos-ui/issues",
   "publishConfig": {
     "access": "public"
   },
@@ -39,8 +39,10 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "eslint": "^9.39.2",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.56.0"
   },
   "exports": {
     ".": {

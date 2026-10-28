@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useMounted } from '@/hooks/useMounted';
+import { useClientSeededState } from '@/hooks/useClientSeededState';
 import {
   Card,
   Button,
@@ -78,16 +80,63 @@ const FONT_WEIGHTS = [
   { value: 800, label: 'Extra-Bold (800)' },
 ];
 
-export function TypographyPlayground() {
-  const [mounted, setMounted] = useState(false);
+interface PlaygroundSelection {
+  scale: TypographyScale | null;
+  preset: string;
+}
 
-  // Current typography scale state
+function readStoredScales(): SavedTypographyScale[] {
+  const saved = localStorage.getItem('sage-typography-scales');
+  if (!saved) return [];
+  try {
+    return JSON.parse(saved);
+  } catch (e) {
+    console.error('Failed to load saved scales:', e);
+    return [];
+  }
+}
+
+/**
+ * The scale to open with: the preset the Typography grid handed over, falling
+ * back to Studio. Pure — the hand-off key is cleared by an effect, not here.
+ */
+function readInitialSelection(): PlaygroundSelection {
+  const presetId = localStorage.getItem('sage-typography-playground-preset');
+  if (presetId) {
+    const preset = fontThemes.find(ft => ft.id === presetId);
+    if (preset) return { scale: generateScale(preset), preset: presetId };
+  }
+  // Initialize with Studio theme as default
+  const studioTheme = fontThemes.find(ft => ft.id === 'studio');
+  if (studioTheme) return { scale: generateScale(studioTheme), preset: 'studio' };
+  return { scale: null, preset: '' };
+}
+
+export function TypographyPlayground() {
+  const mounted = useMounted();
+
+  // Current typography scale state. Seeded after hydration from the preset the
+  // Typography grid may have handed over via localStorage.
+  const [initialSelection] = useClientSeededState<PlaygroundSelection>(
+    { scale: null, preset: '' },
+    readInitialSelection
+  );
   const [currentScale, setCurrentScale] = useState<TypographyScale | null>(null);
   const [selectedPreset, setSelectedPreset] = useState<string>('');
 
+  // Adopt the seeded selection once it arrives, then leave it under user control.
+  const [adoptedSelection, setAdoptedSelection] = useState(false);
+  if (!adoptedSelection && initialSelection.scale) {
+    setAdoptedSelection(true);
+    setCurrentScale(initialSelection.scale);
+    setSelectedPreset(initialSelection.preset);
+  }
 
-  // Saved scales
-  const [savedScales, setSavedScales] = useState<SavedTypographyScale[]>([]);
+  // Saved scales, restored from localStorage after hydration.
+  const [savedScales, setSavedScales] = useClientSeededState<SavedTypographyScale[]>(
+    [],
+    readStoredScales
+  );
   const [scaleName, setScaleName] = useState('');
   const [scaleDescription, setScaleDescription] = useState('');
   const [justSaved, setJustSaved] = useState(false);
@@ -100,44 +149,10 @@ export function TypographyPlayground() {
   // Get all available fonts
   const availableFonts = useMemo(() => getAllFontNames(), []);
 
-  // Prevent hydration mismatch
+  // The hand-off key is single-use. Reading it is pure and happens in
+  // `readInitialSelection`; clearing it is a side effect and stays in an effect.
   useEffect(() => {
-    setMounted(true);
-
-    // Load saved scales from localStorage
-    const saved = localStorage.getItem('sage-typography-scales');
-    if (saved) {
-      try {
-        setSavedScales(JSON.parse(saved));
-      } catch (e) {
-        console.error('Failed to load saved scales:', e);
-      }
-    }
-
-    // Check if a preset was selected from the Typography grid
-    const presetId = localStorage.getItem('sage-typography-playground-preset');
-    let initialPreset = 'studio'; // Default
-
-    if (presetId) {
-      // Load the selected preset
-      const preset = fontThemes.find(ft => ft.id === presetId);
-      if (preset) {
-        initialPreset = presetId;
-        const scale = generateScale(preset);
-        setCurrentScale(scale);
-        setSelectedPreset(presetId);
-      }
-      // Clear the stored preset
-      localStorage.removeItem('sage-typography-playground-preset');
-    } else {
-      // Initialize with Studio theme as default
-      const studioTheme = fontThemes.find(ft => ft.id === initialPreset);
-      if (studioTheme) {
-        const defaultScale = generateScale(studioTheme);
-        setCurrentScale(defaultScale);
-        setSelectedPreset(initialPreset);
-      }
-    }
+    localStorage.removeItem('sage-typography-playground-preset');
   }, []);
 
   // Handle preset selection

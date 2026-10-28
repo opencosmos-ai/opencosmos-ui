@@ -11,6 +11,13 @@ import { TroubleshootingTab } from './TroubleshootingTab';
 
 type McpTab = 'mcp-server-overview' | 'overview' | 'installation' | 'tools' | 'usage' | 'troubleshooting';
 
+function deriveMcpTab(activeItemId: string | undefined): McpTab {
+    const validTabs: McpTab[] = ['overview', 'installation', 'tools', 'usage', 'troubleshooting'];
+    if (activeItemId && validTabs.includes(activeItemId as McpTab)) return activeItemId as McpTab;
+    // If no activeItemId, show the section overview
+    return 'mcp-server-overview';
+}
+
 interface McpSectionProps {
     activeItemId?: string;
     breadcrumbs?: BreadcrumbItemLegacy[];
@@ -18,18 +25,15 @@ interface McpSectionProps {
 }
 
 export function McpSection({ activeItemId, breadcrumbs, onItemChange }: McpSectionProps) {
-    const [activeTab, setActiveTab] = useState<McpTab>('mcp-server-overview');
+    const [activeTab, setActiveTab] = useState<McpTab>(() => deriveMcpTab(activeItemId));
 
-    // Update active tab when activeItemId changes
-    useEffect(() => {
-        const validTabs: McpTab[] = ['overview', 'installation', 'tools', 'usage', 'troubleshooting'];
-        if (activeItemId && validTabs.includes(activeItemId as McpTab)) {
-            setActiveTab(activeItemId as McpTab);
-        } else {
-            // If no activeItemId, show the section overview
-            setActiveTab('mcp-server-overview');
-        }
-    }, [activeItemId]);
+    // Adjust derived state during render when the prop changes, rather than in
+    // an effect: https://react.dev/learn/you-might-not-need-an-effect
+    const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+    if (activeItemId !== prevActiveItemId) {
+        setPrevActiveItemId(activeItemId);
+        setActiveTab(deriveMcpTab(activeItemId));
+    }
 
     const handleTabChange = (id: string) => {
         setActiveTab(id as McpTab);

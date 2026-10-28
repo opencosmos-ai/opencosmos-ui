@@ -3,9 +3,10 @@ import React from 'react';
 import { SlidersHorizontal, Sun, Moon, Building2, Leaf, Zap, Palette } from 'lucide-react';
 import { studioTokens, terraTokens, voltTokens } from '@opencosmos/tokens';
 import { useCustomizer, useTheme, ColorPicker, Button, Card } from '@opencosmos/ui';
+import { useMounted } from '@/hooks/useMounted';
 
 export function CustomizerTab() {
-    const [mounted, setMounted] = React.useState(false);
+    const mounted = useMounted();
     const {
         motion,
         setMotion,
@@ -35,8 +36,15 @@ export function CustomizerTab() {
     const [tempSecondaryColor, setTempSecondaryColor] = React.useState(currentPalette?.secondary || '#5a67d8');
     const [tempAccentColor, setTempAccentColor] = React.useState(currentPalette?.accent || '#ff6b35');
 
-    // Update temp color when palette changes OR theme/mode changes
-    React.useEffect(() => {
+    // Reset the temp colors when the active palette, theme, or mode changes.
+    // Adjusted during render rather than in an effect
+    // (https://react.dev/learn/you-might-not-need-an-effect). The key is built
+    // from values rather than the `currentPalette` object, whose identity is not
+    // stable across renders.
+    const paletteKey = `${theme}|${colorMode}|${currentPalette?.primary ?? ''}|${currentPalette?.secondary ?? ''}|${currentPalette?.accent ?? ''}`;
+    const [prevPaletteKey, setPrevPaletteKey] = React.useState(paletteKey);
+    if (paletteKey !== prevPaletteKey) {
+        setPrevPaletteKey(paletteKey);
         if (currentPalette) {
             setTempPrimaryColor(currentPalette.primary);
             setTempSecondaryColor(currentPalette.secondary || currentPalette.primary);
@@ -45,7 +53,7 @@ export function CustomizerTab() {
             // Reset to default if no custom palette exists
             setTempPrimaryColor(getDefaultPrimary(theme, colorMode));
         }
-    }, [currentPalette, theme, colorMode, getDefaultPrimary]);
+    }
 
     const handleApplyColor = () => {
         // Apply all colors atomically, clearing secondary/accent in simple mode
@@ -63,10 +71,6 @@ export function CustomizerTab() {
         setTempSecondaryColor('#5a67d8');
         setTempAccentColor('#ff6b35');
     };
-
-    React.useEffect(() => {
-        setMounted(true);
-    }, []);
 
     if (!mounted) return null;
 

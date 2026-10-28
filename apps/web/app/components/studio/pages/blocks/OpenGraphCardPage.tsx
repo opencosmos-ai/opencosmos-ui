@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useClientSeededState } from '@/hooks/useClientSeededState';
 import {
     OpenGraphCard,
     Card,
@@ -70,6 +71,17 @@ const AVAILABLE_FONTS = [
     'Work Sans',
 ].sort();
 
+function readStoredDesigns(): SavedOGDesign[] {
+    const saved = localStorage.getItem('sage-og-designs');
+    if (!saved) return [];
+    try {
+        return JSON.parse(saved);
+    } catch (e) {
+        console.error('Failed to load saved designs:', e);
+        return [];
+    }
+}
+
 export function OpenGraphCardPage() {
     // State for all customizable properties
     const [title, setTitle] = useState('OpenCosmos UI');
@@ -84,22 +96,10 @@ export function OpenGraphCardPage() {
     const [fontFamily, setFontFamily] = useState('Space Grotesk');
     const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
 
-    // Saved designs
-    const [savedDesigns, setSavedDesigns] = useState<SavedOGDesign[]>([]);
+    // Saved designs, restored from localStorage after hydration.
+    const [savedDesigns, setSavedDesigns] = useClientSeededState<SavedOGDesign[]>([], readStoredDesigns);
     const [designName, setDesignName] = useState('');
     const [justSaved, setJustSaved] = useState(false);
-
-    // Load saved designs from localStorage on mount
-    useEffect(() => {
-        const saved = localStorage.getItem('sage-og-designs');
-        if (saved) {
-            try {
-                setSavedDesigns(JSON.parse(saved));
-            } catch (e) {
-                console.error('Failed to load saved designs:', e);
-            }
-        }
-    }, []);
 
     // Save current design
     const saveDesign = () => {

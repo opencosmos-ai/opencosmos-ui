@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Card, Button, Slider, Switch, Label, SecondaryNav, useMotionPreference } from '@opencosmos/ui';
 import { motion } from 'framer-motion';
 import { RotateCcw } from 'lucide-react';
+import { useMounted } from '@/hooks/useMounted';
 import { baseTokens, motion as motionTokens } from '@opencosmos/ui/tokens';
 
 // Types for our Motion Playground
@@ -31,7 +32,7 @@ function parseCubicBezier(cssString: string): [number, number, number, number] |
 export function PrimitivesSection() {
   const { shouldAnimate, scale: motionScale } = useMotionPreference();
   // Client-side only flag to prevent hydration mismatch
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useMounted();
 
   // Playground State
   const [activeDuration, setActiveDuration] = useState<DurationToken>('normal');
@@ -49,10 +50,6 @@ export function PrimitivesSection() {
   const [activeTab, setActiveTab] = useState('duration');
 
   // Only enable animations after hydration
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   const handleReplay = () => {
     setKey(k => k + 1);
     setIsPlaying(true);

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useMounted } from '@/hooks/useMounted';
 import { Card, AppSidebarProvider, OpenCosmosIcon } from '@opencosmos/ui';
 import type { ComponentConfig } from '../../lib/component-registry';
 import { CodeSnippet } from './CodeSnippet';
@@ -21,16 +22,12 @@ export function EnhancedComponentPlayground({ componentName, config }: Component
     )
   );
   const [copied, setCopied] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const [ejectOpen, setEjectOpen] = useState(false);
   const [ejectSource, setEjectSource] = useState('');
   const [ejectDeps, setEjectDeps] = useState<string[]>([]);
   const [ejectLoading, setEjectLoading] = useState(false);
   const [ejectCopied, setEjectCopied] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const Component = config.component;
 

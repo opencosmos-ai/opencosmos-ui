@@ -58,43 +58,57 @@ const COMPONENT_CATEGORIES = {
   },
 };
 
-export function ComponentsSection({ activeItemId, category, breadcrumbs, onItemChange }: ComponentsSectionProps) {
-  const [selectedComponent, setSelectedComponent] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<string>(category || 'actions');
+/**
+ * Robust lookup: case-insensitive match against registry keys.
+ * Handles 'combobox' -> 'Combobox', 'toggle-group' -> 'ToggleGroup', etc.
+ */
+function findRegistryKey(activeItemId: string | undefined): string | undefined {
+  if (!activeItemId) return undefined;
+  const targetId = activeItemId.toLowerCase().replace(/-/g, '');
+  const registryKey = Object.keys(componentRegistry).find(key =>
+    key.toLowerCase().replace(/-/g, '') === targetId ||
+    key.toLowerCase() === activeItemId.replace(/-/g, '').toLowerCase()
+  );
+  return registryKey && componentRegistry[registryKey] ? registryKey : undefined;
+}
 
-  // Update selected category when prop changes
-  useEffect(() => {
+function inferCategory(registryKey: string | undefined): string | undefined {
+  if (!registryKey) return undefined;
+  for (const [categoryKey, cat] of Object.entries(COMPONENT_CATEGORIES)) {
+    if ((cat.components as readonly string[]).includes(registryKey)) return categoryKey;
+  }
+  return undefined;
+}
+
+export function ComponentsSection({ activeItemId, category, breadcrumbs, onItemChange }: ComponentsSectionProps) {
+  const [selectedComponent, setSelectedComponent] = useState<string>(
+    () => findRegistryKey(activeItemId) ?? ''
+  );
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    () => category || inferCategory(findRegistryKey(activeItemId)) || 'actions'
+  );
+
+  // Adjust derived state during render when the props change, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevProps, setPrevProps] = useState({ activeItemId, category });
+  if (activeItemId !== prevProps.activeItemId || category !== prevProps.category) {
+    setPrevProps({ activeItemId, category });
+
     if (category) {
       setSelectedCategory(category);
     }
-  }, [category]);
 
-  // Update selected component when activeItemId changes
-  useEffect(() => {
-    if (activeItemId) {
-      // Robust lookup: Case-insensitive match against registry keys
-      // This handles 'combobox' -> 'Combobox', 'toggle-group' -> 'ToggleGroup', etc.
-      const targetId = activeItemId.toLowerCase().replace(/-/g, '');
-      const registryKey = Object.keys(componentRegistry).find(key =>
-        key.toLowerCase().replace(/-/g, '') === targetId ||
-        key.toLowerCase() === activeItemId.replace(/-/g, '').toLowerCase()
-      );
+    const registryKey = findRegistryKey(activeItemId);
+    if (registryKey) {
+      setSelectedComponent(registryKey);
 
-      if (registryKey && componentRegistry[registryKey]) {
-        setSelectedComponent(registryKey);
-
-        // If no category provided, infer it (fallback)
-        if (!category) {
-          for (const [categoryKey, cat] of Object.entries(COMPONENT_CATEGORIES)) {
-            if (cat.components.includes(registryKey)) {
-              setSelectedCategory(categoryKey);
-              break;
-            }
-          }
-        }
+      // If no category provided, infer it (fallback)
+      if (!category) {
+        const inferred = inferCategory(registryKey);
+        if (inferred) setSelectedCategory(inferred);
       }
     }
-  }, [activeItemId, category]);
+  }
 
   // Handle component selection and notify parent
   const handleComponentChange = (componentName: string) => {

@@ -40,7 +40,7 @@ const collectionJsonLd = {
   mainEntity: {
     '@type': 'SoftwareSourceCode',
     name: PRODUCT_NAME,
-    codeRepository: 'https://github.com/shalomormsby/opencosmos-ui',
+    codeRepository: 'https://github.com/opencosmos-ai/opencosmos-ui',
     programmingLanguage: ['TypeScript', 'React'],
     runtimePlatform: 'Node.js',
   },

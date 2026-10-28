@@ -29,6 +29,12 @@ type MotionTab =
   | 'cursors' | 'target-cursor' | 'splash-cursor'
   | 'micro-interactions' | 'magnetic';
 
+function deriveMotionTab(activeItemId: string | undefined): MotionTab {
+  if (!activeItemId || activeItemId === 'motion') return 'overview';
+  // We cast here assuming the navigation tree provides valid IDs that match our MotionTab type
+  return activeItemId as MotionTab;
+}
+
 interface MotionSectionsProps {
   activeItemId?: string;
   breadcrumbs?: BreadcrumbItemLegacy[];
@@ -36,21 +42,15 @@ interface MotionSectionsProps {
 }
 
 export function MotionSections({ activeItemId, breadcrumbs, onItemChange }: MotionSectionsProps) {
-  const [activeTab, setActiveTab] = useState<MotionTab>('overview');
+  const [activeTab, setActiveTab] = useState<MotionTab>(() => deriveMotionTab(activeItemId));
 
-  // Update active tab when activeItemId changes
-  useEffect(() => {
-    if (activeItemId) {
-      if (activeItemId === 'motion') {
-        setActiveTab('overview');
-      } else {
-        // We cast here assuming the navigation tree provides valid IDs that match our MotionTab type
-        setActiveTab(activeItemId as MotionTab);
-      }
-    } else {
-      setActiveTab('overview');
-    }
-  }, [activeItemId]);
+  // Adjust derived state during render when the prop changes, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+  if (activeItemId !== prevActiveItemId) {
+    setPrevActiveItemId(activeItemId);
+    setActiveTab(deriveMotionTab(activeItemId));
+  }
 
   return (
     <div>

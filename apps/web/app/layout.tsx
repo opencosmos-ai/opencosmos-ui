@@ -45,7 +45,7 @@ const organizationJsonLd = {
   logo: 'https://opencosmos.ai/studio/favicon.ico',
   description: PRODUCT_DESCRIPTION,
   sameAs: [
-    'https://github.com/shalomormsby/opencosmos-ui',
+    'https://github.com/opencosmos-ai/opencosmos-ui',
     'https://www.npmjs.com/package/@opencosmos/ui',
   ],
 };

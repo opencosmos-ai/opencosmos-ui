@@ -10,6 +10,10 @@ import {
 
 type ChartsTab = 'overview' | 'area-chart' | 'bar-chart' | 'line-chart' | 'pie-chart';
 
+function deriveChartsTab(activeItemId: string | undefined, current: ChartsTab): ChartsTab {
+  return activeItemId ? (activeItemId as ChartsTab) : current;
+}
+
 interface ChartsSectionsProps {
   activeItemId?: string;
   breadcrumbs?: BreadcrumbItemLegacy[];
@@ -263,13 +267,17 @@ function ChartPreview({ title, children, code }: { title: string; children: Reac
 }
 
 export function ChartsSections({ activeItemId, breadcrumbs, onItemChange }: ChartsSectionsProps) {
-  const [activeTab, setActiveTab] = useState<ChartsTab>('overview');
+  const [activeTab, setActiveTab] = useState<ChartsTab>(
+    () => deriveChartsTab(activeItemId, 'overview')
+  );
 
-  useEffect(() => {
-    if (activeItemId) {
-      setActiveTab(activeItemId as ChartsTab);
-    }
-  }, [activeItemId]);
+  // Adjust derived state during render when the prop changes, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+  if (activeItemId !== prevActiveItemId) {
+    setPrevActiveItemId(activeItemId);
+    setActiveTab((current) => deriveChartsTab(activeItemId, current));
+  }
 
   return (
     <div className="w-full min-w-0">

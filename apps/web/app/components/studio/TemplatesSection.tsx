@@ -5,6 +5,12 @@ import { Breadcrumbs, TertiaryNav, CollapsibleCodeBlock, Card, PageTemplate, Foo
 import { ExternalLink, Layout, Ruler, Type, LayoutGrid, Scale, Sparkles, ArrowDown, Lightbulb } from 'lucide-react';
 import { TemplatesOverview } from './TemplatesOverview';
 
+function deriveTemplate(activeItemId: string | undefined, current: string): string {
+  if (activeItemId && ['templates-overview', 'page-template'].includes(activeItemId)) return activeItemId;
+  if (!activeItemId || activeItemId === 'templates') return 'templates-overview';
+  return current;
+}
+
 interface TemplatesSectionProps {
   breadcrumbs?: BreadcrumbItemLegacy[];
   activeItemId?: string;
@@ -12,16 +18,19 @@ interface TemplatesSectionProps {
 }
 
 export function TemplatesSection({ breadcrumbs, activeItemId, onItemChange }: TemplatesSectionProps) {
-  const [selectedTemplate, setSelectedTemplate] = useState('templates-overview');
+  const [selectedTemplate, setSelectedTemplate] = useState(
+    () => deriveTemplate(activeItemId, 'templates-overview')
+  );
+
+  // Adjust derived state during render when the prop changes, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+  if (activeItemId !== prevActiveItemId) {
+    setPrevActiveItemId(activeItemId);
+    setSelectedTemplate((current) => deriveTemplate(activeItemId, current));
+  }
 
   // Sync selectedTemplate with activeItemId when it changes (from sidebar navigation)
-  useEffect(() => {
-    if (activeItemId && ['templates-overview', 'page-template'].includes(activeItemId)) {
-      setSelectedTemplate(activeItemId);
-    } else if (!activeItemId || activeItemId === 'templates') {
-      setSelectedTemplate('templates-overview');
-    }
-  }, [activeItemId]);
 
   const handleTemplateChange = (id: string) => {
     setSelectedTemplate(id);

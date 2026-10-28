@@ -1,5 +1,56 @@
 # @opencosmos/ui
 
+## 1.10.6 - 2026-10-28
+
+### Patch Changes
+
+- ee64e55: `ThinkingIndicator`: "The vast library of human wisdom opens its doors to you." leaves the landing pool (Shalom's call).
+
+## 1.10.5 - 2026-09-19
+
+### Patch Changes
+
+- e26fde7: Say 104 components, which is how many there are
+  
+  Both READMEs, the ejection CLI's description and the MCP tool docs advertised
+  **100**. The library exports **104**, and has since `AppSidebar` and
+  `OpenCosmosIcon` were added to the registry — a count that is now enforced by a
+  test rather than maintained by hand, so this is the last time it can drift
+  unnoticed.
+
+## 1.10.4 - 2026-09-18
+
+### Patch Changes
+
+- d1908a2: Point `repository.url` and `bugs` at `opencosmos-ai/opencosmos-ui`
+
+  The repository moved from `shalomormsby/` to the `opencosmos-ai` organization.
+  npm renders both fields on the package page, so until they are republished every
+  listing sends readers through a redirect to reach the source or file an issue.
+
+- Updated dependencies [d1908a2]
+  - @opencosmos/tokens@1.0.2
+
+## 1.10.3 - 2026-08-17
+
+### Patch Changes
+
+- 6d53b2c: Fix ghost Buttons turning invisible on hover.
+
+  The `ghost` variant was `hover:text-accent-foreground` with no hover surface beneath it. `accent-foreground` is the colour meant to sit on an accent background, so in any theme where it approaches the page background — Volt Dark has both at `#000000` — hovering a ghost button rendered its label in the background colour and the control disappeared under the cursor.
+
+  `ghost` now hovers to a primary outline and primary text, mirroring `outline` one step quieter: `outline` is bordered at rest and fills primary on hover; `ghost` is bare at rest and outlines primary on hover. A transparent border is carried at rest so gaining one on hover never changes the box, and with border-box sizing the fixed variant heights are unaffected.
+
+## 1.10.2 - 2026-08-16
+
+### Patch Changes
+
+- 560d57a: Document two silent theming gotchas found while integrating the library into a consumer app.
+
+  **Docs:** the setup instructions (root README, `packages/ui/README.md`, and the `create` skill) never mentioned that `--font-heading`/`--font-body`/`--font-mono` are CSS variables `ThemeProvider` sets but nothing in the package ever applies — no component sets `font-family` from them, and neither `theme.css` nor `globals.css` set a base font-family. Without wiring `font-family: var(--font-body)` onto `body` and `var(--font-heading)` onto headings yourself (plus loading each theme's Google Fonts), every theme renders its correct colors but the exact same typeface, with no error.
+
+  **Docs:** added an explicit warning against hardcoding a literal `dark`/`light` class on a layout wrapper. `globals.css` defines dark-mode tokens under a bare `.dark { ... }` selector, not `:root.dark`, so any element carrying that class re-pins tokens for its whole subtree regardless of what `ThemeProvider`/`CustomizerPanel` set on `<html>`. Copying a "force this hero dark" pattern (intentional on this repo's own marketing page) onto a consumer's top-level wrapper makes the Customizer look broken — its own UI updates, the page underneath doesn't — with nothing in the console to point at why.
+
 ## 1.10.1 - 2026-07-23
 
 ### Patch Changes

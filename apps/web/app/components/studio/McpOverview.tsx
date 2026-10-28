@@ -224,7 +224,7 @@ export function McpOverview({ onNavigate }: McpOverviewProps) {
               View the complete README and API documentation
             </Text>
             <a
-              href="https://github.com/shalomormsby/opencosmos-ui/tree/main/packages/mcp"
+              href="https://github.com/opencosmos-ai/opencosmos-ui/tree/main/packages/mcp"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-[var(--color-primary)] hover:underline"
@@ -267,7 +267,7 @@ export function McpOverview({ onNavigate }: McpOverviewProps) {
               Found a bug or have a feature request?
             </Text>
             <a
-              href="https://github.com/shalomormsby/opencosmos-ui/issues"
+              href="https://github.com/opencosmos-ai/opencosmos-ui/issues"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-[var(--color-primary)] hover:underline"

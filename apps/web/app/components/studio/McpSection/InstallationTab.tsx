@@ -151,7 +151,7 @@ yarn add -D @opencosmos/mcp`}
                         id="local-clone"
                         title="Clone Repository"
                         language="bash"
-                        code={`git clone https://github.com/shalomormsby/opencosmos-ui.git
+                        code={`git clone https://github.com/opencosmos-ai/opencosmos-ui.git
 cd ecosystem`}
                         defaultCollapsed={false}
                         showCopy={true}

@@ -44,9 +44,24 @@ Add the CSS imports to your app's global stylesheet, in order:
 @import "@opencosmos/ui/theme.css";    /* design tokens + custom utilities */
 @import "@opencosmos/ui/globals.css";  /* default token VALUES (:root) */
 @import "@opencosmos/ui/styles.css";   /* precompiled component styles */
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body); /* not automatic — see packages/ui/README.md */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
 ```
 
-Then wrap your app root with the required providers:
+Then wrap your app root with the required providers. Never put a hardcoded `dark`/`light`
+class on a layout wrapper — `.dark`/`.light` in `globals.css` are bare class selectors, so
+that permanently overrides the active theme for everything inside it (see
+`packages/ui/README.md` for the full explanation):
 
 ```tsx
 import { ThemeProvider, TooltipProvider } from '@opencosmos/ui'
@@ -90,7 +105,7 @@ export function MyComponent() {
 
 | Package | Description |
 |---------|-------------|
-| [`@opencosmos/ui`](https://www.npmjs.com/package/@opencosmos/ui) | 100 components, providers, hooks, theme system |
+| [`@opencosmos/ui`](https://www.npmjs.com/package/@opencosmos/ui) | 104 components, providers, hooks, theme system |
 | [`@opencosmos/tokens`](https://www.npmjs.com/package/@opencosmos/tokens) | Design tokens (colors, typography, spacing, motion) |
 | [`@opencosmos/mcp`](https://www.npmjs.com/package/@opencosmos/mcp) | MCP server for AI-assisted component discovery |
 | [`@opencosmos/constellation`](https://www.npmjs.com/package/@opencosmos/constellation) | Living knowledge-graph visualizer — a React wrapper around `@cosmos.gl/graph` |
@@ -242,7 +257,7 @@ pnpm release                      # Build and publish to NPM
 opencosmos-ui/
 ├── packages/
 │   ├── ui/                    # @opencosmos/ui — Component library
-│   │   ├── src/components/    # 100 components by functional category
+│   │   ├── src/components/    # 104 components by functional category
 │   │   ├── src/hooks/         # useTheme, useMotionPreference
 │   │   ├── src/providers/     # ThemeProvider, TooltipProvider
 │   │   └── src/lib/           # Utilities, stores

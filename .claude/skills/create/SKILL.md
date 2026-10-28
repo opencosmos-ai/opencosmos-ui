@@ -7,7 +7,7 @@ user-invocable: true
 
 # /create — Build with @opencosmos/ui
 
-<!-- Canonical source: opencosmos-ui/.claude/skills/create/SKILL.md (ships in the @opencosmos/ui npm package under .claude/). Consuming repos carry a copy for skill discovery — when you edit this file, propagate the change to those copies. -->
+<!-- Canonical source: opencosmos-ui/.claude/skills/create/SKILL.md. Consuming repos carry a copy for skill discovery — when you edit this file, propagate the change to those copies (opencosmos-ai/opencosmos/.claude/skills/create/). NOTE: this skill does NOT ship in the @opencosmos/ui npm package, despite an earlier claim here that it did. `packages/ui/package.json` lists `.claude` in `files`, but that resolves to `packages/ui/.claude/`, which holds only CLAUDE.md — verified against the 1.10.4 tarball. Editing this file therefore needs no changeset. -->
 
 You are building UI for the OpenCosmos platform. **Always reach for `@opencosmos/ui` components first.** Never write custom HTML elements, custom CSS, or bespoke JSX when a component in this library covers the use case.
 
@@ -55,6 +55,11 @@ When adding `@opencosmos/ui` to a new app, set up styling **before writing any c
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
   }
 }
 ```
@@ -68,12 +73,32 @@ import './globals.css'
 - `@opencosmos/ui/styles.css` is a **precompiled stylesheet** shipped in the package containing every Tailwind class the components use (responsive variants included). So you do **not** add `@opencosmos/ui` to a Tailwind `content`/`@source` glob, and you do **not** maintain a safelist. (Tailwind v4 + Turbopack silently ignores `node_modules` symlink scans — that's the trap this avoids.)
 - **Order matters:** `styles.css` comes *after* `globals.css`. It references token values but emits no `:root` vars, so it never clobbers them.
 - In Tailwind v4, `@theme` must be processed in the same context as `@import "tailwindcss"`, which the CSS `@import` chain guarantees.
+- **The `font-family` lines are not optional.** `ThemeProvider` sets `--font-heading`/`--font-body`/`--font-mono` as CSS variables, but nothing in the package ever applies them — no component sets `font-family` from them, and neither `theme.css` nor `globals.css` set a base font-family. Skip this and every theme (Studio/Terra/Volt) renders colors correctly but the typeface never visibly changes, because the browser default font is what's actually showing. You must also load each theme's Google Fonts yourself via `next/font/google` (Studio: Outfit + Manrope, Terra: Lora + Instrument Sans, Volt: Space Grotesk) and expose them as `--font-studio-heading`, `--font-studio-body`, etc. — see `apps/web/lib/fonts.ts` in this repo for the reference implementation.
 
 That's the whole setup. No `_ui-safelist.ts`, no post-load grep gate.
 
 > **Upgrading `@opencosmos/ui`:** nothing to regenerate — new component classes ship inside `styles.css`. Just bump the version. (If you maintain an app that predates this, delete its `app/_ui-safelist.ts` and any `@source ".../@opencosmos/ui"` line once you've added the `styles.css` import.)
 
 > **Troubleshooting missing component styles:** confirm `globals.css` imports `@opencosmos/ui/styles.css` *after* `globals.css`; in this monorepo, confirm the library is built (`pnpm --filter @opencosmos/ui build`) so `dist/styles.css` is current.
+
+---
+
+## Never hardcode `dark` (or `light`) on a layout wrapper
+
+`@opencosmos/ui/globals.css` defines dark-mode token values under a bare `.dark { --color-background: #000; ... }` selector — **not** `:root.dark`. `ThemeProvider` toggles `dark` on `<html>` and that's the only place it should ever be set by hand.
+
+If you put a literal `dark` (or `light`) class on any element yourself — copying a "force this hero to always be dark" pattern from a marketing page, for example — that element and everything inside it permanently re-pins every token to that mode's values, no matter what `ThemeProvider`/`CustomizerPanel` set on `<html>`. Since that element is usually most of the visible page, the symptom looks exactly like "the theme customizer is broken": the Customizer's own UI updates fine (it lives outside the hardcoded subtree), but the page underneath never visibly changes.
+
+```tsx
+// ❌ Fights the live theme system — this subtree is now permanently dark,
+// so toggling Light/Dark or switching themes does nothing to it.
+<HeroBlock className="min-h-screen dark bg-background" ... />
+
+// ✅ Inherits whatever ThemeProvider/CustomizerPanel currently has active.
+<HeroBlock className="min-h-screen bg-background" ... />
+```
+
+Only reach for a hardcoded `dark`/`light` class when you deliberately want a section to ignore the user's theme choice (e.g., a brand-locked hero on a docs site that's always dark regardless of reader preference) — never on a top-level layout wrapper, and never as a copy-pasted default.
 
 ---
 
@@ -180,7 +205,7 @@ import { Header, Button, GitHubIcon } from '@opencosmos/ui'
   ]}
   actions={
     <Button variant="outline" size="sm" asChild className="gap-2">
-      <a href="https://github.com/shalomormsby/opencosmos" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/opencosmos-ai/opencosmos" target="_blank" rel="noopener noreferrer">
         <GitHubIcon className="w-4 h-4" />
         Star on GitHub
       </a>
@@ -386,12 +411,59 @@ const { shouldAnimate, scale } = useMotionPreference()
 Before writing any UI code:
 
 1. `globals.css` has the four `@import` lines, in order? (`tailwindcss` → `theme.css` → `globals.css` → `styles.css`)
-2. All colors from tokens — no hardcoded hex, rgb, or Tailwind palette classes?
-3. All components from `@opencosmos/ui` — no custom buttons, inputs, or scroll containers?
-4. Missing component? → Declare it, ask first. Don't build bespoke.
-5. Motion gated by `useMotionPreference`?
-6. Links using `asChild` pattern — not nested `<a>` inside `<button>`?
-7. `cn()` for all conditional classNames?
-8. *(Library contributors only)* No interpolated Tailwind classes — use `responsive-classes.ts`.
+2. `body`/headings set `font-family: var(--font-body)` / `var(--font-heading)`, and each theme's Google Fonts are loaded and exposed as `--font-{theme}-heading`/`--font-{theme}-body`?
+3. No hardcoded `dark`/`light` class on any layout wrapper that should respond to the live theme?
+4. All colors from tokens — no hardcoded hex, rgb, or Tailwind palette classes?
+5. All components from `@opencosmos/ui` — no custom buttons, inputs, or scroll containers?
+6. Missing component? → Declare it, ask first. Don't build bespoke.
+7. Motion gated by `useMotionPreference`?
+8. Links using `asChild` pattern — not nested `<a>` inside `<button>`?
+9. `cn()` for all conditional classNames?
+10. *(Library contributors only)* No interpolated Tailwind classes — use `responsive-classes.ts`.
 
 **Item 1 is the gate.** Missing or mis-ordered CSS imports produce unstyled components with no error. The `styles.css` import is what makes component classes appear — without it, layouts look broken even though the code is correct.
+
+**Items 2 and 3 fail silently too.** Skipping the font-family wiring leaves every theme colored correctly but typographically identical — nothing errors, it just never looks different. A stray `dark`/`light` class on a layout wrapper makes the Customizer look broken (its own UI updates, the page underneath doesn't) with no console warning either.
+
+---
+
+## Shipping a Component to the Library
+
+Only for work that lands in `opencosmos-ui` itself. Building *with* the library needs none of this.
+
+**Three checks already run, and will fail the build. Don't re-verify them by hand:**
+
+| Gate | Fails when |
+|---|---|
+| `registry-coverage.test.ts` | A component is exported but not described in `packages/mcp/src/registry.ts` — or described there but not exported |
+| `changeset status` (on every PR) | A published package changed with no changeset |
+| `pnpm verify:published` (on release) | A version reached `main` but never reached npm |
+
+They exist because each of these failed silently at least once. Trust them, and spend your attention on the three things no test can check.
+
+### 1. Is the changeset body written for the person reading npm?
+
+The changeset body **is** the changelog entry a consumer reads when deciding whether to upgrade. It is not a commit summary, and the two have different audiences.
+
+- ❌ *"fix: update AppSidebar width calc"* — describes the diff
+- ✅ *"Below 768px the sidebar now overlays content over a tap-dismiss scrim instead of pushing it, so content never offsets past the 60px rail."* — describes what changes for someone who installs it
+
+**The test:** would a consumer who has never seen this repository know whether this release affects them?
+
+### 2. Is the semver level right?
+
+Ask what a consumer's build does if they take the upgrade without reading anything.
+
+- **patch** — behaviour they already have gets closer to what they expected
+- **minor** — something new exists that they can opt into; nothing they wrote changes
+- **major** — code that compiles today may not, or renders differently without them asking
+
+A removed prop, a renamed export, a changed default, or a new required peer is **major**, however small the diff. Version numbers cannot be reissued on npm, so this is the one judgement with no undo.
+
+### 3. Does it belong in the library at all?
+
+The library's value is that every product gets the same thing. A component that only one app will ever use costs every consumer bundle size and every maintainer a surface to keep working.
+
+**The test:** name the second product that needs this. If you can't, it belongs in that app, and the [Missing Component](#if-a-required-component-is-missing) rule applies in reverse — say so rather than adding it quietly.
+
+Docs-only changes need no changeset. An empty release is noise on npm.

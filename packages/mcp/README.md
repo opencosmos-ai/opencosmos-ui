@@ -6,7 +6,7 @@ Enable AI assistants like Claude Desktop, Cursor, and VS Code to browse, search,
 
 ## Features
 
-- 🔍 **Browse all 100 components** across 11 functional categories
+- 🔍 **Browse all 104 components** across 11 functional categories
 - 🔎 **Semantic search** by keywords, use cases, or functionality
 - 📖 **Detailed component info** including props, dependencies, and examples
 - 📦 **Installation instructions** with all required dependencies
@@ -184,7 +184,7 @@ Once configured, you can interact with the server through your AI assistant:
 
 > "Show me all components in the OpenCosmos UI"
 
-The AI will use `list_components` to display all 100 components organized by category.
+The AI will use `list_components` to display all 104 components organized by category.
 
 ### Search for Specific Functionality
 
@@ -244,13 +244,13 @@ The server runs in stdio mode, communicating via stdin/stdout per the MCP specif
 ## Documentation
 
 - **Full Documentation**: https://opencosmos.ai/studio/
-- **GitHub**: https://github.com/shalomormsby/opencosmos-ui
+- **GitHub**: https://github.com/opencosmos-ai/opencosmos-ui
 - **MCP Specification**: https://modelcontextprotocol.io/
 
 ## Support
 
 For issues or questions:
-- GitHub Issues: https://github.com/shalomormsby/opencosmos-ui/issues
+- GitHub Issues: https://github.com/opencosmos-ai/opencosmos-ui/issues
 - Documentation: https://opencosmos.ai/studio/#mcp-server
 
 ## License

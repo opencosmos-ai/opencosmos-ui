@@ -1,5 +1,42 @@
 # @opencosmos/mcp
 
+## 0.8.9 - 2026-09-19
+
+### Patch Changes
+
+- e26fde7: Say 104 components, which is how many there are
+  
+  Both READMEs, the ejection CLI's description and the MCP tool docs advertised
+  **100**. The library exports **104**, and has since `AppSidebar` and
+  `OpenCosmosIcon` were added to the registry — a count that is now enforced by a
+  test rather than maintained by hand, so this is the last time it can drift
+  unnoticed.
+
+## 0.8.8 - 2026-09-18
+
+### Patch Changes
+
+- 6e9ea3d: Describe `AppSidebar` and `OpenCosmosIcon` in the registry
+  
+  Both were exported from `@opencosmos/ui` and installable, and neither appeared
+  in the MCP registry — so an agent asking this library what it offers was never
+  told they existed, and would reasonably write a bespoke sidebar instead.
+  
+  `AppSidebar` gains its full prop surface and its four sub-exports
+  (`AppSidebarProvider`, `AppSidebarInset`, `useAppSidebar`, `useIsMobile`),
+  including the responsive behaviour that matters at the call site: it pushes
+  content on desktop and overlays it over a dismissable scrim below 768px.
+
+## 0.8.7 - 2026-09-18
+
+### Patch Changes
+
+- d1908a2: Point `repository.url` and `bugs` at `opencosmos-ai/opencosmos-ui`
+
+  The repository moved from `shalomormsby/` to the `opencosmos-ai` organization.
+  npm renders both fields on the package page, so until they are republished every
+  listing sends readers through a redirect to reach the source or file an issue.
+
 ## 0.8.6 - 2026-04-26
 
 ### Patch Changes

@@ -235,6 +235,10 @@ export default function Galaxy({
             gl.clearColor(0, 0, 0, 1);
         }
 
+        // `resize()` below is called at mount before `program` is assigned, so the
+        // declaration cannot move down to the assignment site without a
+        // temporal-dead-zone throw.
+        // eslint-disable-next-line prefer-const
         let program: Program;
 
         function resize() {

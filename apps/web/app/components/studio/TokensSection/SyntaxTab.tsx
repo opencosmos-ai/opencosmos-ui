@@ -84,7 +84,7 @@ export function SyntaxTab() {
         <div className="bg-[var(--color-background)] p-6 rounded-lg border border-[var(--color-border)]">
           <pre className="text-sm font-mono">
             <code>
-              <span className="text-[var(--syntax-comment)]">// Example TypeScript code</span>
+              <span className="text-[var(--syntax-comment)]">{'// Example TypeScript code'}</span>
               {'\n'}
               <span className="text-[var(--syntax-keyword)]">import</span>
               <span className="text-[var(--syntax-plain)]"> {'{ '}</span>

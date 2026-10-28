@@ -1,5 +1,33 @@
 # Changelog
 
+*Component behaviour and its releases. **One change, one changelog — the one that owns the decision**; the system across all seven is written down once, in the [opencosmos root `CHANGELOG.md`](https://github.com/opencosmos-ai/opencosmos/blob/main/CHANGELOG.md#how-this-changelog-relates-to-the-others). A bug found in a consuming app but fixed here is logged **here** in full, and there in a sentence.*
+
+
+## 2026-10-27
+
+**Studio: Next.js 16.4.3, for the framework's security fixes and a broken build** (`apps/web` only, no release)
+
+- studio.opencosmos.ai ran Next.js 15.5.12, which carried critical and high advisories: remote code execution in the image optimizer, proxy bypasses, request forgery. 16.4.3 clears them.
+- It also fixes a build that had been red in CI since early October. Next 15's Google font loader reads each font file's extension with a regex that returns `null` when Google serves a URL it doesn't expect, and `lib/fonts.ts` crashed the build. 15.5.28, the newest 15.x release, still has that line; Next 16 rewrote the loader. #71 failed the same way on Oct 3.
+- Next 16 removed `next lint`, so `apps/web` now lints with `eslint .` against its existing flat config. Next 16 also rewrote `tsconfig.json` (`jsx: react-jsx`, and its dev types path), which it does on every build.
+- Builds now use Turbopack, Next 16's default. The packages are untouched. The same audit upgraded opencosmos.ai to 16.4.3: [opencosmos#232](https://github.com/opencosmos-ai/opencosmos/pull/232).
+
+## 2026-09-27
+
+**Play Principles: the ecosystem's games share their foundations** (docs only, no release)
+
+- [docs/games/PLAY-PRINCIPLES.md](docs/games/PLAY-PRINCIPLES.md) sets down twelve principles for designing games that are Lovable by Design, each with a test a maker can run: allies not assets, the ethic felt rather than explained, no engineered compulsion, sustain without extraction, privacy by architecture (collect nothing from children), and the rest.
+- The games themselves are private and commercial. What they have learned about *how* to design is not, so it lives here in the commons, per [ADR 0015](docs/decisions/0015-the-commons-for-play-lives-beside-the-design-system.md). DESIGN-PHILOSOPHY now lists the games as expressions of the one mind.
+
+
+## 2026-08-16
+
+**Button: ghost no longer turns invisible on hover** (`@opencosmos/ui` patch)
+
+- The `ghost` variant was `hover:text-accent-foreground` with no hover surface under it. `accent-foreground` is the colour meant to sit *on* an accent background, so wherever it approaches the page background — Volt Dark has both at `#000000` — a ghost button rendered its label in the background colour and vanished under the cursor. Found on a live page where "Sign in" disappeared on hover.
+- `ghost` now hovers to a primary outline and primary text, mirroring `outline` one step quieter: `outline` is bordered at rest and fills primary on hover; `ghost` is bare at rest and outlines primary on hover.
+- The transparent border is carried at rest so gaining one on hover never shifts the box; with border-box sizing the fixed variant heights are unchanged.
+- Regression test added asserting ghost carries its own visible hover affordance and never re-acquires the unpainted-surface pattern. 158/158 tests pass.
 
 ## 2026-06-23
 

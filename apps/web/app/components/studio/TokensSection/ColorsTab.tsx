@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Link from 'next/link';
+import { useMounted } from '@/hooks/useMounted';
 import { Card, Badge, Code, Button, useTheme } from '@opencosmos/ui';
 import { useCustomizer } from '@opencosmos/ui';
 import { colorTokens, semanticColors, getContrastRatio } from '@opencosmos/ui/utils';
@@ -14,11 +16,7 @@ export function ColorsTab() {
   const activePalette = useCustomizer(state => state.customColors?.[theme]?.[mode]);
 
   const [copiedColor, setCopiedColor] = useState<string | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useMounted();
 
   const copyColor = async (text: string, id: string) => {
     try {
@@ -129,11 +127,11 @@ export function ColorsTab() {
 
           <div className="flex items-center gap-3">
             <Button variant="outline" asChild>
-              <a href="/docs/themes/palettes" className="flex items-center gap-2">
+              <Link href="/docs/themes/palettes" className="flex items-center gap-2">
                 <Palette className="w-4 h-4" />
                 Change Palette
                 <ArrowRight className="w-4 h-4 ml-1" />
-              </a>
+              </Link>
             </Button>
           </div>
         </div>

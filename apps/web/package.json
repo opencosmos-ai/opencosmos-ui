@@ -1,24 +1,24 @@
 {
   "name": "web",
-  "version": "0.1.27",
+  "version": "0.1.32",
   "description": "The official documentation and studio for OpenCosmos UI.",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^3.10.0",
-    "@tanstack/react-table": "^8.21.3",
     "@opencosmos/constellation": "workspace:*",
     "@opencosmos/mcp": "workspace:*",
     "@opencosmos/tokens": "workspace:*",
     "@opencosmos/ui": "workspace:*",
+    "@tanstack/react-table": "^8.21.3",
     "@vercel/analytics": "^1.6.1",
     "@vercel/edge-config": "^1.4.3",
     "class-variance-authority": "^0.7.1",
@@ -26,7 +26,7 @@
     "date-fns": "^4.1.0",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",
-    "next": "^15.5.12",
+    "next": "^16.4.3",
     "react": "^19.2.1",
     "react-day-picker": "^9.13.0",
     "react-dom": "^19.2.1",
@@ -37,10 +37,13 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
+    "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4.0.0",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.4.3",
     "postcss": "^8.4.49",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.9.3"

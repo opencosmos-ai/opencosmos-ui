@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Card } from '@opencosmos/ui';
 import { searchContent, getResultTypeIcon, type SearchResult } from '../lib/search-index';
 
@@ -12,7 +12,6 @@ interface SearchCommandPaletteProps {
 
 export function SearchCommandPalette({ onNavigate, isOpen, onClose }: SearchCommandPaletteProps) {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -23,7 +22,6 @@ export function SearchCommandPalette({ onNavigate, isOpen, onClose }: SearchComm
       if (e.key === 'Escape' && isOpen) {
         onClose();
         setQuery('');
-        setResults([]);
       }
     };
 
@@ -38,17 +36,28 @@ export function SearchCommandPalette({ onNavigate, isOpen, onClose }: SearchComm
     }
   }, [isOpen]);
 
-  // Search when query changes
-  useEffect(() => {
-    if (query.trim().length > 0) {
-      const searchResults = searchContent(query);
-      setResults(searchResults);
-      setSelectedIndex(0);
-    } else {
-      setResults([]);
-      setSelectedIndex(0);
-    }
-  }, [query]);
+  // Results are a pure function of the query, so they are computed during render
+  // rather than mirrored into state by an effect.
+  const results = useMemo<SearchResult[]>(
+    () => (query.trim().length > 0 ? searchContent(query) : []),
+    [query]
+  );
+
+  // Move the cursor back to the top whenever the query changes.
+  const [prevQuery, setPrevQuery] = useState(query);
+  if (query !== prevQuery) {
+    setPrevQuery(query);
+    setSelectedIndex(0);
+  }
+
+  const handleSelect = useCallback(
+    (result: SearchResult) => {
+      onNavigate(result.path);
+      onClose();
+      setQuery('');
+    },
+    [onNavigate, onClose]
+  );
 
   // Keyboard navigation
   const handleKeyDown = useCallback(
@@ -64,15 +73,8 @@ export function SearchCommandPalette({ onNavigate, isOpen, onClose }: SearchComm
         handleSelect(results[selectedIndex]);
       }
     },
-    [results, selectedIndex]
+    [results, selectedIndex, handleSelect]
   );
-
-  const handleSelect = (result: SearchResult) => {
-    onNavigate(result.path);
-    onClose();
-    setQuery('');
-    setResults([]);
-  };
 
   // Scroll selected item into view
   useEffect(() => {
@@ -96,7 +98,6 @@ export function SearchCommandPalette({ onNavigate, isOpen, onClose }: SearchComm
         onClick={() => {
           onClose();
           setQuery('');
-          setResults([]);
         }}
       />
 

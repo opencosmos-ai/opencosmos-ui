@@ -9,6 +9,14 @@ import { ToolsOverview } from './ToolsOverview';
 
 type ToolsTab = 'tools-overview' | 'brand-builder' | 'open-graph-card' | 'charts';
 
+function deriveToolsTab(activeItemId: string | undefined): ToolsTab {
+  if (!activeItemId) return 'tools-overview';
+  if (activeItemId === 'brand-builder') return 'brand-builder';
+  if (activeItemId.startsWith('charts') || activeItemId === 'area-chart' || activeItemId === 'bar-chart' || activeItemId === 'line-chart' || activeItemId === 'pie-chart') return 'charts';
+  if (activeItemId === 'open-graph-card') return 'open-graph-card';
+  return 'tools-overview';
+}
+
 interface ToolsSectionProps {
   activeItemId?: string;
   breadcrumbs?: BreadcrumbItemLegacy[];
@@ -16,21 +24,15 @@ interface ToolsSectionProps {
 }
 
 export function ToolsSection({ activeItemId, breadcrumbs = [], onItemChange }: ToolsSectionProps) {
-  const [activeTab, setActiveTab] = useState<ToolsTab>('tools-overview');
+  const [activeTab, setActiveTab] = useState<ToolsTab>(() => deriveToolsTab(activeItemId));
 
-  useEffect(() => {
-    if (!activeItemId) {
-      setActiveTab('tools-overview');
-    } else if (activeItemId === 'brand-builder') {
-      setActiveTab('brand-builder');
-    } else if (activeItemId.startsWith('charts') || activeItemId === 'area-chart' || activeItemId === 'bar-chart' || activeItemId === 'line-chart' || activeItemId === 'pie-chart') {
-      setActiveTab('charts');
-    } else if (activeItemId === 'open-graph-card') {
-      setActiveTab('open-graph-card');
-    } else {
-      setActiveTab('tools-overview');
-    }
-  }, [activeItemId]);
+  // Adjust derived state during render when the prop changes, rather than in an
+  // effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevActiveItemId, setPrevActiveItemId] = useState(activeItemId);
+  if (activeItemId !== prevActiveItemId) {
+    setPrevActiveItemId(activeItemId);
+    setActiveTab(deriveToolsTab(activeItemId));
+  }
 
   const handleTabChange = (value: string) => {
     const tab = value as ToolsTab;
