@@ -124,15 +124,25 @@ export function HeroBlock({
 
                 {/* CTAs */}
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+                    {/* With `href` a CTA renders as a real link (so it navigates, opens in a new tab, and reads as a link to assistive tech); otherwise as a button. */}
                     {primaryCta && (
-                        <Button size="lg" variant={primaryCta.variant || "default"} onClick={primaryCta.onClick}>
-                            {primaryCta.label}
-                            <ArrowRight className="w-4 h-4 ml-2" />
+                        <Button size="lg" variant={primaryCta.variant || "default"} onClick={primaryCta.onClick} asChild={Boolean(primaryCta.href)}>
+                            {primaryCta.href ? (
+                                <a href={primaryCta.href}>
+                                    {primaryCta.label}
+                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                </a>
+                            ) : (
+                                <>
+                                    {primaryCta.label}
+                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                </>
+                            )}
                         </Button>
                     )}
                     {secondaryCta && (
-                        <Button size="lg" variant="outline" className="bg-[var(--color-surface)]/50 backdrop-blur-md" onClick={secondaryCta.onClick}>
-                            {secondaryCta.label}
+                        <Button size="lg" variant="outline" className="bg-[var(--color-surface)]/50 backdrop-blur-md" onClick={secondaryCta.onClick} asChild={Boolean(secondaryCta.href)}>
+                            {secondaryCta.href ? <a href={secondaryCta.href}>{secondaryCta.label}</a> : secondaryCta.label}
                         </Button>
                     )}
                 </motion.div>

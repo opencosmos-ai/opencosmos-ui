@@ -25,10 +25,27 @@ const badgeVariants = cva(
                 md: "px-2.5 py-1 text-sm",
                 lg: "px-3 py-1.5 text-base",
             },
+            // `soft` keeps the variant's colour but drops the fill: coloured text,
+            // a same-colour outline and a faint same-colour tint. For data chips
+            // (counts, ages, statuses) that sit beside content rather than shout.
+            appearance: {
+                solid: "",
+                soft: "",
+            },
         },
+        compoundVariants: [
+            { appearance: "soft", variant: "default", className: "border-primary/40 bg-primary/10 text-primary hover:bg-primary/10" },
+            { appearance: "soft", variant: "secondary", className: "border-secondary-foreground/40 bg-secondary-foreground/10 text-secondary-foreground hover:bg-secondary-foreground/10" },
+            { appearance: "soft", variant: "destructive", className: "border-destructive/40 bg-destructive/10 text-destructive hover:bg-destructive/10" },
+            { appearance: "soft", variant: "success", className: "border-success/40 bg-success/10 text-success hover:bg-success/10" },
+            { appearance: "soft", variant: "warning", className: "border-warning/40 bg-warning/10 text-warning hover:bg-warning/10" },
+            { appearance: "soft", variant: "error", className: "border-error/40 bg-error/10 text-error hover:bg-error/10" },
+            { appearance: "soft", variant: "info", className: "border-info/40 bg-info/10 text-info hover:bg-info/10" },
+        ],
         defaultVariants: {
             variant: "default",
             size: "md",
+            appearance: "solid",
         },
     }
 )
@@ -39,7 +56,7 @@ export interface BadgeProps
     dot?: boolean;
 }
 
-function Badge({ className, variant, size, dot, children, style, ...props }: BadgeProps & { style?: React.CSSProperties }) {
+function Badge({ className, variant, size, appearance, dot, children, style, ...props }: BadgeProps & { style?: React.CSSProperties }) {
     const sizeStyles: Record<string, React.CSSProperties> = {
         sm: { padding: '0.125rem 0.5rem', fontSize: 'var(--text-xs, 0.75rem)' },
         md: { padding: '0.25rem 0.625rem', fontSize: 'var(--text-sm, 0.875rem)' },
@@ -55,16 +72,34 @@ function Badge({ className, variant, size, dot, children, style, ...props }: Bad
         error: { backgroundColor: 'var(--color-error, #C62828)', color: 'var(--color-error-foreground, #ffffff)', borderColor: 'transparent' },
         info: { backgroundColor: 'var(--color-info, #346BEA)', color: 'var(--color-info-foreground, #ffffff)', borderColor: 'transparent' },
     };
+    // Soft mirrors the solid map: the same token per variant, as text, outline and tint.
+    const softTone: Record<string, string> = {
+        default: 'var(--color-primary, #346BEA)',
+        secondary: 'var(--color-secondary-foreground, #1E49AA)',
+        destructive: 'var(--color-destructive, #C62828)',
+        success: 'var(--color-success, #2E7D32)',
+        warning: 'var(--color-warning, #E65100)',
+        error: 'var(--color-error, #C62828)',
+        info: 'var(--color-info, #346BEA)',
+    };
+    const tone = appearance === 'soft' ? softTone[variant || 'default'] : undefined;
+    const colorStyle: React.CSSProperties = tone
+        ? {
+            color: tone,
+            borderColor: `color-mix(in srgb, ${tone} 40%, transparent)`,
+            backgroundColor: `color-mix(in srgb, ${tone} 10%, transparent)`,
+        }
+        : variantStyles[variant || 'default'];
     return (
         <div
-            className={cn(badgeVariants({ variant, size }), className)}
+            className={cn(badgeVariants({ variant, size, appearance }), className)}
             style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 borderRadius: '9999px',
                 fontWeight: 600,
                 ...sizeStyles[size || 'md'],
-                ...variantStyles[variant || 'default'],
+                ...colorStyle,
                 ...style,
             }}
             {...props}

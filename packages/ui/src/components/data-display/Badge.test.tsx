@@ -40,4 +40,23 @@ describe('Badge', () => {
     render(<Badge className="custom-badge">Styled</Badge>)
     expect(screen.getByText('Styled')).toHaveClass('custom-badge')
   })
+  it('soft appearance keeps the variant colour as text, outline and tint', () => {
+    render(<Badge variant="info" appearance="soft">2 days</Badge>)
+    const chip = screen.getByText('2 days')
+    expect(chip).toHaveClass('text-info', 'border-info/40', 'bg-info/10')
+    expect(chip).not.toHaveClass('bg-info')
+    expect(chip.style.color).toContain('--color-info')
+    expect(chip.style.backgroundColor).toContain('color-mix')
+  })
+
+  it('solid stays the default appearance', () => {
+    render(<Badge variant="warning">Solid</Badge>)
+    expect(screen.getByText('Solid')).toHaveClass('bg-warning')
+    expect(screen.getByText('Solid')).not.toHaveClass('bg-warning/10')
+  })
+
+  it('soft has no effect on the outline variant', () => {
+    render(<Badge variant="outline" appearance="soft">Plain</Badge>)
+    expect(screen.getByText('Plain')).toHaveClass('text-foreground')
+  })
 })
