@@ -1,5 +1,11 @@
 # @opencosmos/mcp
 
+## 0.8.11 - 2026-10-28
+
+### Patch Changes
+
+- ed37731: The component registry now documents `Badge`'s `appearance` prop (`'solid' | 'soft'`), so agents that look up Badge learn the soft data-chip style.
+
 ## 0.8.10 - 2026-10-28
 
 ### Patch Changes
