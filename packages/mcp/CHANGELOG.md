@@ -1,5 +1,11 @@
 # @opencosmos/mcp
 
+## 0.8.10 - 2026-10-28
+
+### Patch Changes
+
+- The component registry now describes `TerminalWindow` (props, use cases and an example), so agents that search the registry can find it.
+
 ## 0.8.9 - 2026-09-19
 
 ### Patch Changes
