@@ -1,5 +1,15 @@
 # @opencosmos/ui
 
+## 1.12.0 - 2026-10-28
+
+### Minor Changes
+
+- ed37731: `Badge` takes a new `appearance` prop. `appearance="soft"` keeps the variant's colour but drops the fill: coloured text, a same-colour outline and a faint same-colour tint. Use it for data chips (counts, ages, statuses) that should sit beside content rather than compete with it, for example `<Badge variant="warning" appearance="soft" size="sm">5 days</Badge>`. It works with every coloured variant (`default`, `secondary`, `destructive`, `success`, `warning`, `error`, `info`) and does nothing to `outline`. The default stays `solid`, so existing badges render exactly as before.
+
+### Patch Changes
+
+- ed37731: `HeroBlock` now honours `href` on `primaryCta` and `secondaryCta`. Before, `href` was accepted by the types but ignored, so a CTA given only an `href` rendered as a button that did nothing. A CTA with `href` now renders as a real link (it navigates, opens in a new tab on middle-click, and reads as a link to screen readers); a CTA with only `onClick` is unchanged.
+
 ## 1.11.0 - 2026-10-28
 
 ### Minor Changes
