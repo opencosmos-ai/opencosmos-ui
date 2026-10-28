@@ -1,5 +1,11 @@
 # @opencosmos/ui
 
+## 1.10.6 - 2026-10-28
+
+### Patch Changes
+
+- ee64e55: `ThinkingIndicator`: "The vast library of human wisdom opens its doors to you." leaves the landing pool (Shalom's call).
+
 ## 1.10.5 - 2026-09-19
 
 ### Patch Changes
