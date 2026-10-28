@@ -800,8 +800,9 @@ export const COMPONENT_REGISTRY: Record<string, ComponentMetadata> = {
       variant: { type: "'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'error' | 'info'", default: "'default'", description: 'Visual variant' },
       size: { type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Size variant' },
       dot: { type: 'boolean', default: 'false', description: 'Show animated indicator dot' },
+      appearance: { type: "'solid' | 'soft'", default: "'solid'", description: 'solid fills with the variant colour; soft uses it for text, outline and a faint tint (data chips)' },
     },
-    example: `<Badge variant="success" dot>Active</Badge>`,
+    example: `<Badge variant="success" dot>Active</Badge>\n<Badge variant="warning" appearance="soft" size="sm">5 days</Badge>`,
   },
   calendar: {
     name: 'Calendar',
