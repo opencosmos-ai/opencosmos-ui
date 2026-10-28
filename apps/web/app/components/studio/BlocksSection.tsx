@@ -9,10 +9,11 @@ import type { SyntaxToken } from '@opencosmos/ui';
 import { BlocksOverview } from './BlocksOverview';
 import { HeroBlockPage } from './pages/blocks/HeroBlockPage';
 import { OpenGraphCardPage } from './pages/blocks/OpenGraphCardPage';
+import { TerminalWindowPage } from './pages/blocks/TerminalWindowPage';
 import { EnhancedComponentPlayground } from './ComponentsSection/EnhancedComponentPlayground';
 import { componentRegistry } from '../lib/component-registry';
 
-type BlockType = 'overview' | 'PageLayout' | 'PrimaryNav' | 'SecondaryNav' | 'TertiaryNav' | 'FirstStack' | 'SecondStack' | 'Footer' | 'Toast' | 'Modal' | 'CollapsibleCodeBlock' | 'HeroBlock' | 'OpenGraphCard';
+type BlockType = 'overview' | 'PageLayout' | 'PrimaryNav' | 'SecondaryNav' | 'TertiaryNav' | 'FirstStack' | 'SecondStack' | 'Footer' | 'Toast' | 'Modal' | 'CollapsibleCodeBlock' | 'HeroBlock' | 'OpenGraphCard' | 'TerminalWindow';
 
 function derivePattern(activeItemId: string | undefined, current: BlockType): BlockType {
   if (!activeItemId) return 'overview';
@@ -23,7 +24,7 @@ function derivePattern(activeItemId: string | undefined, current: BlockType): Bl
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join('') as BlockType;
 
-  if (['PageLayout', 'PrimaryNav', 'SecondaryNav', 'TertiaryNav', 'FirstStack', 'SecondStack', 'Footer', 'Toast', 'Modal', 'CollapsibleCodeBlock', 'HeroBlock', 'OpenGraphCard'].includes(patternName)) {
+  if (['PageLayout', 'PrimaryNav', 'SecondaryNav', 'TertiaryNav', 'FirstStack', 'SecondStack', 'Footer', 'Toast', 'Modal', 'CollapsibleCodeBlock', 'HeroBlock', 'OpenGraphCard', 'TerminalWindow'].includes(patternName)) {
     return patternName;
   }
   return current;
@@ -154,6 +155,7 @@ export function BlocksSection({ activeItemId, breadcrumbs, onItemChange }: Block
     { id: 'Modal', label: 'Modal' },
     { id: 'CollapsibleCodeBlock', label: 'Code Block' },
     { id: 'HeroBlock', label: 'Hero Block' },
+    { id: 'TerminalWindow', label: 'Terminal Window' },
   ];
 
   return (
@@ -808,6 +810,7 @@ const sections = [
 
         {/* Hero Block Component */}
         {selectedPattern === 'HeroBlock' && <HeroBlockPage />}
+        {selectedPattern === 'TerminalWindow' && <TerminalWindowPage />}
 
         {/* OpenGraphCard Component */}
         {selectedPattern === 'OpenGraphCard' && <OpenGraphCardPage />}

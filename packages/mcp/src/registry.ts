@@ -94,7 +94,7 @@ export const COMPONENT_CATEGORIES = {
   blocks: {
     label: 'Blocks',
     description: 'Composed page sections and layouts',
-    count: 2,
+    count: 3,
   },
 } as const;
 
@@ -1958,7 +1958,7 @@ export const COMPONENT_REGISTRY: Record<string, ComponentMetadata> = {
   },
 
   // ============================================================================
-  // SPECIALTY - Blocks (2)
+  // SPECIALTY - Blocks (3)
   // ============================================================================
   hero: {
     name: 'Hero',
@@ -2003,6 +2003,28 @@ export const COMPONENT_REGISTRY: Record<string, ComponentMetadata> = {
       accentColor: { type: 'string', description: 'Override accent color (hex)' },
     },
     example: `// In opengraph-image.tsx:\nexport default function OGImage() {\n  return <OpenGraphCard title="My Page" description="A great description" variant="primary" />\n}`,
+  },
+  'terminal-window': {
+    name: 'TerminalWindow',
+    category: 'blocks',
+    description: 'Mac-style terminal window (traffic-light dots and title bar) that types its lines out one character at a time, with a working copy-to-clipboard button. Respects useMotionPreference: with animation off, every line renders at once.',
+    keywords: ['terminal', 'shell', 'command', 'cli', 'install', 'typing', 'typewriter', 'code', 'copy'],
+    useCases: [
+      'Install commands on landing pages',
+      'Getting-started steps',
+      'CLI demos',
+      'Command snippets the reader can copy',
+    ],
+    dependencies: ['framer-motion', 'lucide-react'],
+    props: {
+      lines: { type: 'string[]', description: 'Lines to type out in order, one character at a time', required: true },
+      title: { type: 'string', default: "'Terminal'", description: 'Window title shown in the title bar' },
+      loop: { type: 'boolean', default: 'false', description: 'After the last line, pause, clear and start again' },
+      speed: { type: 'number', default: '0.025', description: 'Seconds per character while typing' },
+      copyText: { type: 'string', default: "lines.join('\\n')", description: 'Text the Copy button puts on the clipboard' },
+      className: { type: 'string', description: 'Additional classes for the outer window' },
+    },
+    example: `<TerminalWindow\n  title="Terminal — zsh"\n  lines={['npm install @opencosmos/ui', '✓ installed 1 package']}\n  loop\n/>`,
   },
 
   // ============================================================================
