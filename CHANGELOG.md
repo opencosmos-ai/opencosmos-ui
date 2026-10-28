@@ -3,6 +3,15 @@
 *Component behaviour and its releases. **One change, one changelog — the one that owns the decision**; the system across all seven is written down once, in the [opencosmos root `CHANGELOG.md`](https://github.com/opencosmos-ai/opencosmos/blob/main/CHANGELOG.md#how-this-changelog-relates-to-the-others). A bug found in a consuming app but fixed here is logged **here** in full, and there in a sentence.*
 
 
+## 2026-10-27
+
+**Studio: Next.js 16.4.3, for the framework's security fixes and a broken build** (`apps/web` only, no release)
+
+- studio.opencosmos.ai ran Next.js 15.5.12, which carried critical and high advisories: remote code execution in the image optimizer, proxy bypasses, request forgery. 16.4.3 clears them.
+- It also fixes a build that had been red in CI since early October. Next 15's Google font loader reads each font file's extension with a regex that returns `null` when Google serves a URL it doesn't expect, and `lib/fonts.ts` crashed the build. 15.5.28, the newest 15.x release, still has that line; Next 16 rewrote the loader. #71 failed the same way on Oct 3.
+- Next 16 removed `next lint`, so `apps/web` now lints with `eslint .` against its existing flat config. Next 16 also rewrote `tsconfig.json` (`jsx: react-jsx`, and its dev types path), which it does on every build.
+- Builds now use Turbopack, Next 16's default. The packages are untouched. The same audit upgraded opencosmos.ai to 16.4.3: [opencosmos#232](https://github.com/opencosmos-ai/opencosmos/pull/232).
+
 ## 2026-09-27
 
 **Play Principles: the ecosystem's games share their foundations** (docs only, no release)
