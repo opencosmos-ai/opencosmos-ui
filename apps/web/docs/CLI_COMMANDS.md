@@ -410,7 +410,3 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 - **Changesets:** https://github.com/changesets/changesets
 - **OpenCosmos Studio:** https://opencosmos.ai/studio/
 - **GitHub:** https://github.com/opencosmos-ai/opencosmos-ui
-
----
-
-**Last Updated:** 2026-01-30

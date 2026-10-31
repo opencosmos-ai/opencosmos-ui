@@ -2,8 +2,6 @@
 
 > Complete reference for the OpenCosmos UI's continuous integration and deployment pipeline.
 
-Last updated: 2026-02-22
-
 ---
 
 ## The "Zero-Touch" Release Workflow

@@ -2,8 +2,6 @@
 
 > Source of truth for `@opencosmos/ui`, `@opencosmos/tokens`, `@opencosmos/mcp`, and the OpenCosmos Studio documentation site. Read [DESIGN-PHILOSOPHY.md](../DESIGN-PHILOSOPHY.md) before writing any code — it's the North Star.
 
-Last updated: 2026-03-07
-
 ---
 
 ## What This Repo Is
