@@ -393,10 +393,10 @@ const { shouldAnimate, scale } = useMotionPreference();
 **Slider Background Contrast**: The slider background needs increased contrast, especially in the Volt theme. Currently difficult to see the track/rail.
 
 ### References
-- [customizer.ts:5-23](../../packages/ui/src/lib/store/customizer.ts#L5-L23) - Store implementation
-- [useMotionPreference.ts](../../packages/ui/src/hooks/useMotionPreference.ts) - Motion preference hook
-- [VariableWeightText.tsx:68-76](../../packages/ui/src/components/data-display/VariableWeightText.tsx#L68-L76) - Working example
-- [CustomizerPanel.tsx:68-84](../../packages/ui/src/components/layout/CustomizerPanel.tsx#L68-L84) - Slider UI
+- [customizer.ts:5-23](../../../packages/ui/src/lib/store/customizer.ts#L5-L23) - Store implementation
+- [useMotionPreference.ts](../../../packages/ui/src/hooks/useMotionPreference.ts) - Motion preference hook
+- [VariableWeightText.tsx:68-76](../../../packages/ui/src/components/data-display/VariableWeightText.tsx#L68-L76) - Working example
+- [CustomizerPanel.tsx:68-84](../../../packages/ui/src/components/layout/CustomizerPanel.tsx#L68-L84) - Slider UI
 
 ---
 

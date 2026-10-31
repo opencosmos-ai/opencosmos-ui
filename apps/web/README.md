@@ -149,7 +149,7 @@ To add a new component to the playground:
 - ✅ GitHub source links for all components
 - ✅ Migration from atomic design to functional organization
 
-See [PHASE-7-COMPLETION.md](./docs/archive/PHASE-7-COMPLETION.md) for full details.
+See [PHASE-7-COMPLETION.md](https://github.com/opencosmos-ai/opencosmos/blob/9fc01f56ff0460c1fddb19113f8c5ee25e0676ae/apps/web/docs/archive/PHASE-7-COMPLETION.md) for full details.
 
 ### Phase 8 (Enhancement)
 - Search/filter functionality
@@ -201,7 +201,7 @@ Ecosystem Documentation Structure:
 
 **Studio Development:**
 - **[CHANGELOG.md](./CHANGELOG.md)** — Studio version history
-- **[PHASE-7-COMPLETION.md](./docs/archive/PHASE-7-COMPLETION.md)** — Documentation overhaul details
+- **[PHASE-7-COMPLETION.md](https://github.com/opencosmos-ai/opencosmos/blob/9fc01f56ff0460c1fddb19113f8c5ee25e0676ae/apps/web/docs/archive/PHASE-7-COMPLETION.md)** — Documentation overhaul details
 
 ---
 

@@ -17,7 +17,7 @@
 - [ ] Changes pass `pnpm lint && pnpm typecheck && pnpm build`
 - [ ] Accessibility: keyboard navigable, screen reader friendly, motion respects `useMotionPreference()`
 - [ ] No hardcoded colors — uses CSS variables / theme tokens
-- [ ] New components follow the [register-new-component workflow](.agent/workflows/register-new-component.md)
+- [ ] New components follow the [complete workflow for adding a component](https://github.com/opencosmos-ai/opencosmos-ui/blob/main/.claude/CLAUDE.md#adding-a-component-complete-workflow)
 - [ ] CHANGELOG.md updated (if significant change)
 
 ## Test Plan
