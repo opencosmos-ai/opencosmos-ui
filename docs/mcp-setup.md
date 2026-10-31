@@ -426,7 +426,6 @@ Common issues and solutions...
 
 ---
 
-**Last Updated:** 2025-12-15
 **Primary Platform:** Claude Code in VS Code on macOS
 **Tested With:** Claude Code v0.x, Figma Desktop MCP Server (latest)
 **Multi-Platform Support:** Ready for Gemini in Antigravity and other LLM combinations
