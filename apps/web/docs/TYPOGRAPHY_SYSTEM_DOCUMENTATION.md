@@ -620,7 +620,7 @@ To add a new font to the Typography System:
 
 ## Changelog
 
-See [CHANGELOG.md](../../CHANGELOG.md) for full version history.
+See [CHANGELOG.md](../../../CHANGELOG.md) for full version history.
 
 **v1.0.0** (2026-01-24)
 - Initial release

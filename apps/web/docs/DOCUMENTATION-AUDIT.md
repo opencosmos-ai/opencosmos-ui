@@ -1183,7 +1183,7 @@ Brief overview of 5 issues:
 - Gap #1: "Next Steps" after setup
 - Gap #3: MCP Local Development Setup
 
-See [SAGE-UI-AUDIT.md](./archive/audit-2026-01-26/SAGE-UI-AUDIT.md) lines 640-1315 for details.
+See [SAGE-UI-AUDIT.md](https://github.com/opencosmos-ai/opencosmos/blob/9fc01f56ff0460c1fddb19113f8c5ee25e0676ae/apps/web/docs/archive/audit-2026-01-26/SAGE-UI-AUDIT.md) lines 640-1315 for details.
 
 ---
 
@@ -1198,7 +1198,7 @@ Brief overview of 4 issues:
 - Phase 0.12: Add 50+ Missing Components to MCP Registry
 - Gap #4: CLI Commands Reference
 
-See [SAGE-UI-AUDIT.md](./archive/audit-2026-01-26/SAGE-UI-AUDIT.md) lines 893-1540 for details.
+See [SAGE-UI-AUDIT.md](https://github.com/opencosmos-ai/opencosmos/blob/9fc01f56ff0460c1fddb19113f8c5ee25e0676ae/apps/web/docs/archive/audit-2026-01-26/SAGE-UI-AUDIT.md) lines 893-1540 for details.
 
 ---
 
