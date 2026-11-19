@@ -3,6 +3,13 @@
 *Component behaviour and its releases. **One change, one changelog — the one that owns the decision**; the system across all seven is written down once, in the [opencosmos root `CHANGELOG.md`](https://github.com/opencosmos-ai/opencosmos/blob/main/CHANGELOG.md#how-this-changelog-relates-to-the-others). A bug found in a consuming app but fixed here is logged **here** in full, and there in a sentence.*
 
 
+## 2026-11-18
+
+**Studio: Next.js 16.4.6, for two `use cache` advisories** (`apps/web` only, no release)
+
+- Next.js 16.4.3 carried two moderate advisories, [GHSA-vc7v-qv4w-wrv8](https://github.com/advisories/GHSA-vc7v-qv4w-wrv8) and [GHSA-mfr8-8qww-v76h](https://github.com/advisories/GHSA-mfr8-8qww-v76h), both fixed in 16.4.5. The Studio uses neither `use cache` nor `unstable_cache()`, so it wasn't exposed.
+- `next` and `eslint-config-next` 16.4.3 → 16.4.6. Nothing else in the lockfile moved, and the packages are untouched. The same pass upgraded opencosmos.ai: [opencosmos#245](https://github.com/opencosmos-ai/opencosmos/pull/245).
+
 ## 2026-10-27
 
 **Studio: Next.js 16.4.3, for the framework's security fixes and a broken build** (`apps/web` only, no release)
